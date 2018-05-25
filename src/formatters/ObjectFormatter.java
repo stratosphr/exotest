@@ -17,6 +17,16 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
+    public String visit(Var var) {
+        return var.getName();
+    }
+
+    @Override
+    public String visit(Const aConst) {
+        return aConst.getName();
+    }
+
+    @Override
     public String visit(Plus plus) {
         return plus.getOperands().size() == 1 ? plus.getOperands().get(0).accept(this) : plus.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" + ", "(", ")"));
     }

@@ -11,6 +11,10 @@ public interface IObjectFormatter {
 
     String visit(Int anInt);
 
+    String visit(Var var);
+
+    String visit(Const aConst);
+
     String visit(Plus plus);
 
     String visit(Minus minus);

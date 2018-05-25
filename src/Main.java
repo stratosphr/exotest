@@ -1,7 +1,4 @@
-import langs.bevent.exprs.arith.Div;
-import langs.bevent.exprs.arith.Int;
-import langs.bevent.exprs.arith.Minus;
-import langs.bevent.exprs.arith.Plus;
+import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 
 public class Main {
@@ -18,6 +15,7 @@ public class Main {
                 new Equiv(new True(), new False()),
                 new Implies(new Equiv(new False(), new Or()), new Implies(new True(), new False()))
         ));
+        System.out.println(new Plus(new Var("test"), new Var("toto"), new Const("someConst")));
     }
 
 }
