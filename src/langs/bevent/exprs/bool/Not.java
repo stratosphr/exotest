@@ -1,4 +1,4 @@
-package langs.bevent.exprs.arith;
+package langs.bevent.exprs.bool;
 
 import formatters.IObjectFormatter;
 
@@ -6,10 +6,10 @@ import formatters.IObjectFormatter;
  * Created by gvoiron on 25/05/18.
  * Time : 17:51
  */
-public final class Div extends ABinaryArithExpr<AArithExpr> {
+public final class Not extends AUnaryBoolExpr<ABoolExpr> {
 
-    public Div(AArithExpr left, AArithExpr right) {
-        super(left, right);
+    public Not(ABoolExpr operand) {
+        super(operand);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package formatters;
 
 import langs.bevent.exprs.arith.*;
+import langs.bevent.exprs.bool.*;
 
 import java.util.stream.Collectors;
 
@@ -33,6 +34,41 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Div div) {
         return div.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" / ", "(", ")"));
+    }
+
+    @Override
+    public String visit(False aFalse) {
+        return "false";
+    }
+
+    @Override
+    public String visit(True aTrue) {
+        return "true";
+    }
+
+    @Override
+    public String visit(Not not) {
+        return "not(" + not.getOperand().accept(this) + ")";
+    }
+
+    @Override
+    public String visit(And and) {
+        return and.getOperands().isEmpty() ? new False().accept(this) : and.getOperands().size() == 1 ? and.getOperands().get(0).accept(this) : and.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" and ", "(", ")"));
+    }
+
+    @Override
+    public String visit(Or or) {
+        return or.getOperands().isEmpty() ? new True().accept(this) : or.getOperands().size() == 1 ? or.getOperands().get(0).accept(this) : or.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" or ", "(", ")"));
+    }
+
+    @Override
+    public String visit(Implies implies) {
+        return implies.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" => ", "(", ")"));
+    }
+
+    @Override
+    public String visit(Equiv equiv) {
+        return equiv.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" <==> ", "(", ")"));
     }
 
 }
