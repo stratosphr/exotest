@@ -17,7 +17,7 @@ public abstract class AUnaryBoolExpr<Operand extends AExpr> extends ANaryBoolExp
         this.operand = operand;
     }
 
-    public Operand getOperand() {
+    public final Operand getOperand() {
         return operand;
     }
 

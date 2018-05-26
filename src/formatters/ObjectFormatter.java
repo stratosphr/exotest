@@ -2,6 +2,9 @@ package formatters;
 
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
+import langs.bevent.exprs.bool.defs.ConstDef;
+import langs.bevent.exprs.bool.defs.VarDef;
+import langs.bevent.exprs.sets.Set;
 
 import java.util.stream.Collectors;
 
@@ -17,13 +20,13 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
-    public String visit(Var var) {
-        return var.getName();
+    public String visit(Const aConst) {
+        return aConst.getName();
     }
 
     @Override
-    public String visit(Const aConst) {
-        return aConst.getName();
+    public String visit(Var var) {
+        return var.getName();
     }
 
     @Override
@@ -79,6 +82,31 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Equiv equiv) {
         return equiv.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" <==> ", "(", ")"));
+    }
+
+    @Override
+    public <Value extends AArithExpr> String visit(In<Value> in) {
+        return in.getExpr().accept(this) + " in " + in.getDomain().accept(this);
+    }
+
+    @Override
+    public String visit(Equals equals) {
+        return equals.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" = ", "(", ")"));
+    }
+
+    @Override
+    public String visit(ConstDef constDef) {
+        return new Equals(constDef.getExpr(), constDef.getValue()).accept(this);
+    }
+
+    @Override
+    public String visit(VarDef varDef) {
+        return new In<>(varDef.getVar(), varDef.getDomain()).accept(this);
+    }
+
+    @Override
+    public String visit(Set set) {
+        return set.getElements().stream().map(element -> element.accept(this)).collect(Collectors.joining(", ", "{", "}"));
     }
 
 }

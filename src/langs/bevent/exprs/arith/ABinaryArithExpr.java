@@ -19,11 +19,11 @@ public abstract class ABinaryArithExpr<Operand extends AExpr> extends ANaryArith
         this.right = right;
     }
 
-    public Operand getLeft() {
+    public final Operand getLeft() {
         return left;
     }
 
-    public Operand getRight() {
+    public final Operand getRight() {
         return right;
     }
 

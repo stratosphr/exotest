@@ -19,11 +19,11 @@ public abstract class ABinaryBoolExpr<Operand extends AExpr> extends ANaryBoolEx
         this.right = right;
     }
 
-    public Operand getLeft() {
+    public final Operand getLeft() {
         return left;
     }
 
-    public Operand getRight() {
+    public final Operand getRight() {
         return right;
     }
 
