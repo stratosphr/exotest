@@ -8,7 +8,7 @@ import formatters.IObjectFormatter;
  */
 public final class Int extends AArithExpr {
 
-    private Integer value;
+    private final Integer value;
 
     public Int(Integer value) {
         this.value = value;

@@ -10,8 +10,8 @@ import langs.bevent.exprs.sets.ASetExpr;
  */
 public final class In<Value extends AArithExpr> extends AIn<Value> {
 
-    public In(Value value, ASetExpr domain) {
-        super(value, domain);
+    public In(Value expr, ASetExpr domain) {
+        super(expr, domain);
     }
 
     @Override

@@ -2,8 +2,10 @@ package formatters;
 
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
-import langs.bevent.exprs.bool.defs.ConstDef;
-import langs.bevent.exprs.bool.defs.VarDef;
+import langs.bevent.exprs.defs.ConstDef;
+import langs.bevent.exprs.defs.FunDef;
+import langs.bevent.exprs.defs.VarDef;
+import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 
 import java.util.stream.Collectors;
@@ -27,6 +29,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Var var) {
         return var.getName();
+    }
+
+    @Override
+    public String visit(Fun fun) {
+        return fun.getName() + "(" + fun.getParam().accept(this) + ")";
     }
 
     @Override
@@ -96,7 +103,7 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(ConstDef constDef) {
-        return new Equals(constDef.getExpr(), constDef.getValue()).accept(this);
+        return new Equals(constDef.getConst(), constDef.getValue()).accept(this);
     }
 
     @Override
@@ -105,8 +112,18 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
+    public String visit(FunDef funDef) {
+        return funDef.getName() + " : " + funDef.getDomain().accept(this) + " --> " + funDef.getCodomain().accept(this);
+    }
+
+    @Override
     public String visit(Set set) {
         return set.getElements().stream().map(element -> element.accept(this)).collect(Collectors.joining(", ", "{", "}"));
+    }
+
+    @Override
+    public String visit(Range range) {
+        return range.getLowerBound().accept(this) + ".." + range.getUpperBound().accept(this);
     }
 
 }

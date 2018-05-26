@@ -2,8 +2,10 @@ package formatters;
 
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
-import langs.bevent.exprs.bool.defs.ConstDef;
-import langs.bevent.exprs.bool.defs.VarDef;
+import langs.bevent.exprs.defs.ConstDef;
+import langs.bevent.exprs.defs.FunDef;
+import langs.bevent.exprs.defs.VarDef;
+import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 
 /**
@@ -17,6 +19,8 @@ public interface IObjectFormatter {
     String visit(Const aConst);
 
     String visit(Var var);
+
+    String visit(Fun fun);
 
     String visit(Plus plus);
 
@@ -48,6 +52,10 @@ public interface IObjectFormatter {
 
     String visit(VarDef varDef);
 
+    String visit(FunDef funDef);
+
     String visit(Set set);
+
+    String visit(Range range);
 
 }

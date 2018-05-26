@@ -13,8 +13,14 @@ import java.util.stream.Collectors;
  */
 public final class Set extends ASetExpr {
 
+    private final LinkedHashSet<AArithExpr> elements;
+
     public Set(AArithExpr... elements) {
-        super(Arrays.stream(elements).collect(Collectors.toCollection(LinkedHashSet::new)));
+        this.elements = Arrays.stream(elements).collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    public LinkedHashSet<AArithExpr> getElements() {
+        return elements;
     }
 
     @Override

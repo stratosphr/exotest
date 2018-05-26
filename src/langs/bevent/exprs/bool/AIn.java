@@ -1,12 +1,13 @@
 package langs.bevent.exprs.bool;
 
+import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.sets.ASetExpr;
 
 /**
  * Created by gvoiron on 26/05/18.
  * Time : 11:35
  */
-public abstract class AIn<Expr> extends ABoolExpr {
+public abstract class AIn<Expr extends AArithExpr> extends ABoolExpr {
 
     private final Expr expr;
     private final ASetExpr domain;
@@ -16,7 +17,7 @@ public abstract class AIn<Expr> extends ABoolExpr {
         this.domain = domain;
     }
 
-    public final Expr getExpr() {
+    public Expr getExpr() {
         return expr;
     }
 
