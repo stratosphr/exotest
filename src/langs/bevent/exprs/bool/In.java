@@ -4,7 +4,7 @@ import com.microsoft.z3.BoolExpr;
 import visitors.formatters.object.IObjectFormatter;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.sets.ASetExpr;
-import visitors.encoders.smt.ISMTEncoder;
+import visitors.encoders.z3.IZ3Encoder;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -22,7 +22,7 @@ public final class In<Value extends AArithExpr> extends AIn<Value> {
     }
 
     @Override
-    public BoolExpr accept(ISMTEncoder generator) {
+    public BoolExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
     }
 

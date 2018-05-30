@@ -2,7 +2,7 @@ package langs.bevent.exprs.arith;
 
 import com.microsoft.z3.ArithExpr;
 import visitors.formatters.object.IObjectFormatter;
-import visitors.encoders.smt.ISMTEncoder;
+import visitors.encoders.z3.IZ3Encoder;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -26,7 +26,7 @@ public final class Var extends AArithExpr {
     }
 
     @Override
-    public ArithExpr accept(ISMTEncoder generator) {
+    public ArithExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
     }
 

@@ -1,4 +1,4 @@
-package visitors.encoders.smt;
+package visitors.encoders.z3;
 
 import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.BoolExpr;
@@ -11,11 +11,11 @@ import visitors.sets.DomainConstraintGenerator;
  * Created by gvoiron on 30/05/18.
  * Time : 10:33
  */
-public final class SMTEncoder implements ISMTEncoder {
+public final class Z3Encoder implements IZ3Encoder {
 
     private Context context;
 
-    public SMTEncoder(Context context) {
+    public Z3Encoder(Context context) {
         this.context = context;
     }
 

@@ -1,4 +1,4 @@
-package visitors.encoders.smt;
+package visitors.encoders.z3;
 
 import com.microsoft.z3.ArithExpr;
 import com.microsoft.z3.BoolExpr;
@@ -9,7 +9,7 @@ import langs.bevent.exprs.bool.*;
  * Created by gvoiron on 30/05/18.
  * Time : 10:34
  */
-public interface ISMTEncoder {
+public interface IZ3Encoder {
 
     BoolExpr visit(False aFalse);
 

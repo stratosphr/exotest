@@ -1,7 +1,7 @@
 package langs.bevent.exprs.arith;
 
 import com.microsoft.z3.ArithExpr;
-import visitors.encoders.smt.ISMTEncoder;
+import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public final class Times extends ANaryArithExpr<AArithExpr> {
     }
 
     @Override
-    public ArithExpr accept(ISMTEncoder generator) {
+    public ArithExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
     }
 

@@ -2,7 +2,7 @@ package langs.bevent.exprs.bool;
 
 import com.microsoft.z3.BoolExpr;
 import langs.bevent.exprs.arith.AArithExpr;
-import visitors.encoders.smt.ISMTEncoder;
+import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
 /**
@@ -21,7 +21,7 @@ public final class GT extends ABinaryBoolExpr<AArithExpr> {
     }
 
     @Override
-    public BoolExpr accept(ISMTEncoder generator) {
+    public BoolExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
     }
 
