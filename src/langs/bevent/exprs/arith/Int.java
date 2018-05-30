@@ -1,6 +1,7 @@
 package langs.bevent.exprs.arith;
 
 import com.microsoft.z3.ArithExpr;
+import langs.AObject;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.encoders.z3.IZ3Encoder;
 
@@ -28,6 +29,11 @@ public final class Int extends AArithExpr {
     @Override
     public ArithExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
+    }
+
+    @Override
+    public int compareTo(AObject object) {
+        return object instanceof Int ? getValue().compareTo(((Int) object).getValue()) : super.compareTo(object);
     }
 
 }

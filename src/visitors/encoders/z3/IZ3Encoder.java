@@ -11,6 +11,22 @@ import langs.bevent.exprs.bool.*;
  */
 public interface IZ3Encoder {
 
+    ArithExpr visit(Int anInt);
+
+    ArithExpr visit(Const aConst);
+
+    ArithExpr visit(Var var);
+
+    ArithExpr visit(Fun fun);
+
+    ArithExpr visit(Plus plus);
+
+    ArithExpr visit(Minus minus);
+
+    ArithExpr visit(Times times);
+
+    ArithExpr visit(Div div);
+
     BoolExpr visit(False aFalse);
 
     BoolExpr visit(True aTrue);
@@ -38,21 +54,4 @@ public interface IZ3Encoder {
     BoolExpr visit(GT gt);
 
     BoolExpr visit(GEq gEq);
-
-    ArithExpr visit(Int anInt);
-
-    ArithExpr visit(Const aConst);
-
-    ArithExpr visit(Var var);
-
-    ArithExpr visit(Fun fun);
-
-    ArithExpr visit(Plus plus);
-
-    ArithExpr visit(Minus minus);
-
-    ArithExpr visit(Times times);
-
-    ArithExpr visit(Div div);
-
 }
