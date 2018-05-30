@@ -1,6 +1,8 @@
 package langs.bevent.exprs.arith;
 
-import formatters.IObjectFormatter;
+import com.microsoft.z3.ArithExpr;
+import visitors.formatters.object.IObjectFormatter;
+import visitors.encoders.smt.ISMTEncoder;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -27,6 +29,11 @@ public final class Fun extends AArithExpr {
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
+    }
+
+    @Override
+    public ArithExpr accept(ISMTEncoder generator) {
+        return generator.visit(this);
     }
 
 }

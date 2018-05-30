@@ -1,10 +1,14 @@
 package langs.bevent.exprs.sets;
 
-import formatters.IObjectFormatter;
 import langs.bevent.exprs.arith.AArithExpr;
+import langs.bevent.exprs.bool.ABoolExpr;
+import langs.bevent.exprs.bool.Equals;
+import langs.bevent.exprs.bool.Or;
+import visitors.formatters.object.IObjectFormatter;
+import visitors.sets.IDomainConstraintGenerator;
 
 import java.util.Arrays;
-import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -13,19 +17,25 @@ import java.util.stream.Collectors;
  */
 public final class Set extends ASetExpr {
 
-    private final LinkedHashSet<AArithExpr> elements;
+    private final List<AArithExpr> elements;
 
     public Set(AArithExpr... elements) {
-        this.elements = Arrays.stream(elements).collect(Collectors.toCollection(LinkedHashSet::new));
+        this.elements = Arrays.stream(elements).distinct().collect(Collectors.toList());
     }
 
-    public LinkedHashSet<AArithExpr> getElements() {
+    public List<AArithExpr> getElements() {
         return elements;
     }
 
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
+    }
+
+
+    @Override
+    public ABoolExpr accept(IDomainConstraintGenerator generator) {
+        return generator.visit(this);
     }
 
 }

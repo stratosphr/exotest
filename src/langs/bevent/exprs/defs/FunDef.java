@@ -1,6 +1,6 @@
 package langs.bevent.exprs.defs;
 
-import formatters.IObjectFormatter;
+import visitors.formatters.object.IObjectFormatter;
 import langs.bevent.exprs.sets.ASetExpr;
 
 /**

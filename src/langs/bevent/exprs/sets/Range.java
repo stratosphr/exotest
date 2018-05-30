@@ -1,7 +1,9 @@
 package langs.bevent.exprs.sets;
 
-import formatters.IObjectFormatter;
 import langs.bevent.exprs.arith.AArithExpr;
+import langs.bevent.exprs.bool.ABoolExpr;
+import visitors.formatters.object.IObjectFormatter;
+import visitors.sets.IDomainConstraintGenerator;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -28,6 +30,11 @@ public final class Range extends ASetExpr {
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
+    }
+
+    @Override
+    public ABoolExpr accept(IDomainConstraintGenerator generator) {
+        return generator.visit(this);
     }
 
 }

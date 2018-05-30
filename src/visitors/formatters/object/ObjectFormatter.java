@@ -1,4 +1,4 @@
-package formatters;
+package visitors.formatters.object;
 
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
@@ -99,6 +99,31 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Equals equals) {
         return equals.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" = ", "(", ")"));
+    }
+
+    @Override
+    public String visit(NEq nEq) {
+        return new Not(new Equals(nEq.getLeft(), nEq.getRight())).accept(this);
+    }
+
+    @Override
+    public String visit(LT lt) {
+        return lt.getLeft().accept(this) + " < " + lt.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(LEq lEq) {
+        return lEq.getLeft().accept(this) + " <= " + lEq.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(GT gt) {
+        return gt.getLeft().accept(this) + gt.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(GEq gEq) {
+        return gEq.getLeft().accept(this) + " >= " + gEq.getRight().accept(this);
     }
 
     @Override

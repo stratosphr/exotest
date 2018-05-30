@@ -1,4 +1,4 @@
-package formatters;
+package visitors.formatters.object;
 
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
@@ -47,6 +47,16 @@ public interface IObjectFormatter {
     <Value extends AArithExpr> String visit(In<Value> in);
 
     String visit(Equals equals);
+
+    String visit(NEq nEq);
+
+    String visit(LT lt);
+
+    String visit(LEq lEq);
+
+    String visit(GT gt);
+
+    String visit(GEq gEq);
 
     String visit(ConstDef constDef);
 

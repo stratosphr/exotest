@@ -1,13 +1,14 @@
 package langs;
 
-import formatters.IObjectFormatter;
-import formatters.ObjectFormatter;
+import visitors.formatters.object.IObjectFormattable;
+import visitors.formatters.object.IObjectFormatter;
+import visitors.formatters.object.ObjectFormatter;
 
 /**
  * Created by gvoiron on 25/05/18.
  * Time : 17:46
  */
-public abstract class AObject {
+public abstract class AObject implements IObjectFormattable {
 
     public abstract String accept(IObjectFormatter formatter);
 

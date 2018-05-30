@@ -1,6 +1,8 @@
 package langs.bevent.exprs.arith;
 
-import formatters.IObjectFormatter;
+import com.microsoft.z3.ArithExpr;
+import visitors.encoders.smt.ISMTEncoder;
+import visitors.formatters.object.IObjectFormatter;
 
 import java.util.Arrays;
 
@@ -17,6 +19,11 @@ public final class Minus extends ANaryArithExpr<AArithExpr> {
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
+    }
+
+    @Override
+    public ArithExpr accept(ISMTEncoder generator) {
+        return generator.visit(this);
     }
 
 }
