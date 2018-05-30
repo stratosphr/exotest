@@ -3,7 +3,7 @@ package langs.bevent.exprs.sets;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.bool.ABoolExpr;
 import visitors.formatters.object.IObjectFormatter;
-import visitors.sets.IDomainConstraintGenerator;
+import visitors.generators.sets.IDomainConstraintGenerator;
 
 /**
  * Created by gvoiron on 26/05/18.

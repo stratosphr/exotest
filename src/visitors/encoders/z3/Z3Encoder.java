@@ -5,7 +5,7 @@ import com.microsoft.z3.BoolExpr;
 import com.microsoft.z3.Context;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
-import visitors.sets.DomainConstraintGenerator;
+import visitors.generators.sets.DomainConstraintGenerator;
 
 /**
  * Created by gvoiron on 30/05/18.

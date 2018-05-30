@@ -2,10 +2,8 @@ package langs.bevent.exprs.sets;
 
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.bool.ABoolExpr;
-import langs.bevent.exprs.bool.Equals;
-import langs.bevent.exprs.bool.Or;
 import visitors.formatters.object.IObjectFormatter;
-import visitors.sets.IDomainConstraintGenerator;
+import visitors.generators.sets.IDomainConstraintGenerator;
 
 import java.util.Arrays;
 import java.util.List;

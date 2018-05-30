@@ -1,4 +1,4 @@
-package visitors.sets;
+package visitors.generators.sets;
 
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.bool.*;

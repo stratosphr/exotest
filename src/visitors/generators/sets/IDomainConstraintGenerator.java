@@ -1,4 +1,4 @@
-package visitors.sets;
+package visitors.generators.sets;
 
 import langs.bevent.exprs.bool.ABoolExpr;
 import langs.bevent.exprs.sets.Range;
