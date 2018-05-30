@@ -1,8 +1,8 @@
 package langs.bevent.exprs.arith;
 
 import com.microsoft.z3.ArithExpr;
-import visitors.formatters.object.IObjectFormatter;
 import visitors.encoders.z3.IZ3Encoder;
+import visitors.formatters.object.IObjectFormatter;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -10,7 +10,7 @@ import visitors.encoders.z3.IZ3Encoder;
  */
 public final class Const extends AArithExpr {
 
-    private String name;
+    private final String name;
 
     public Const(String name) {
         this.name = name;

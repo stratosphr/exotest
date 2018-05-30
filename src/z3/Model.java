@@ -1,8 +1,9 @@
 package z3;
 
 import com.microsoft.z3.Context;
-import langs.bevent.exprs.arith.Int;
-import langs.bevent.exprs.arith.Var;
+import langs.bevent.exprs.arith.*;
+import visitors.decoders.IModelValueDecoder;
+import visitors.encoders.z3.Z3Encoder;
 
 import java.util.List;
 import java.util.TreeMap;
@@ -11,10 +12,25 @@ import java.util.TreeMap;
  * Created by gvoiron on 30/05/18.
  * Time : 15:19
  */
-public final class Model extends TreeMap<Var, Int> {
+public final class Model extends TreeMap<AAssignable, AValue> implements IModelValueDecoder {
 
-    public Model(com.microsoft.z3.Model model, Context context, List<Var> vars) {
-        vars.forEach(var -> put(var, new Int(Integer.parseInt(model.eval(context.mkIntConst(var.getName()), true).toString()))));
+    private final com.microsoft.z3.Model model;
+    private final Context context;
+
+    public Model(com.microsoft.z3.Model model, Context context, List<AAssignable> assignables) {
+        this.model = model;
+        this.context = context;
+        assignables.forEach(var -> put(var, var.accept(this)));
+    }
+
+    @Override
+    public AValue visit(Var var) {
+        return new Int(Integer.parseInt(model.eval(context.mkIntConst(var.getName()), true).toString()));
+    }
+
+    @Override
+    public AValue visit(Fun fun) {
+        return new Int(Integer.parseInt(model.eval(context.mkApp(context.mkFuncDecl(fun.getName(), context.mkIntSort(), context.mkIntSort()), fun.getParam().accept(new Z3Encoder(context))), true).toString()));
     }
 
 }

@@ -30,8 +30,10 @@ public interface IObjectFormatter {
 
     String visit(Div div);
 
+    @SuppressWarnings("SameReturnValue")
     String visit(False aFalse);
 
+    @SuppressWarnings("SameReturnValue")
     String visit(True aTrue);
 
     String visit(Not not);

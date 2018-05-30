@@ -4,10 +4,12 @@ import com.microsoft.z3.Context;
 import com.microsoft.z3.Solver;
 import com.microsoft.z3.Status;
 import errors.ModelUnavailableError;
-import langs.bevent.exprs.arith.Var;
+import langs.bevent.exprs.arith.AAssignable;
 import langs.bevent.exprs.bool.ABoolExpr;
 
 import java.util.List;
+
+import static com.microsoft.z3.Status.*;
 
 /**
  * Created by gvoiron on 30/05/18.
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public final class Z3Result {
 
-    private ABoolExpr formula;
+    private final ABoolExpr formula;
     private final Status status;
     private final Context context;
     private final Solver solver;
@@ -31,8 +33,20 @@ public final class Z3Result {
         return status;
     }
 
-    public Model getModel(List<Var> vars) {
-        if (status == Status.SATISFIABLE) {
+    public boolean isSAT() {
+        return status == SATISFIABLE;
+    }
+
+    public boolean isUNKNOWN() {
+        return status == UNKNOWN;
+    }
+
+    public boolean isUNSAT() {
+        return status == UNSATISFIABLE;
+    }
+
+    public Model getModel(List<AAssignable> vars) {
+        if (status == SATISFIABLE) {
             return new Model(solver.getModel(), context, vars);
         } else {
             throw new ModelUnavailableError(status, formula);

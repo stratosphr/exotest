@@ -13,7 +13,7 @@ import visitors.generators.sets.DomainConstraintGenerator;
  */
 public final class Z3Encoder implements IZ3Encoder {
 
-    private Context context;
+    private final Context context;
 
     public Z3Encoder(Context context) {
         this.context = context;
@@ -106,7 +106,7 @@ public final class Z3Encoder implements IZ3Encoder {
 
     @Override
     public ArithExpr visit(Fun fun) {
-        throw new Error("Not implemented");
+        return (ArithExpr) context.mkApp(context.mkFuncDecl(fun.getName(), context.mkIntSort(), context.mkIntSort()), fun.getParam().accept(this));
     }
 
     @Override

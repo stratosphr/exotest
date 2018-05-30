@@ -10,7 +10,7 @@ import java.util.Collections;
  */
 public abstract class AUnaryBoolExpr<Operand extends AExpr> extends ANaryBoolExpr<Operand> {
 
-    private Operand operand;
+    private final Operand operand;
 
     public AUnaryBoolExpr(Operand operand) {
         super(Collections.singletonList(operand), 1);

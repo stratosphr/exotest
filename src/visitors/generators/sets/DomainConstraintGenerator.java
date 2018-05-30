@@ -11,7 +11,7 @@ import langs.bevent.exprs.sets.Set;
  */
 public final class DomainConstraintGenerator implements IDomainConstraintGenerator {
 
-    private AArithExpr expr;
+    private final AArithExpr expr;
 
     public DomainConstraintGenerator(AArithExpr expr) {
         this.expr = expr;

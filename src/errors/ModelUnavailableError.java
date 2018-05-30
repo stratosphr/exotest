@@ -10,7 +10,7 @@ import langs.bevent.exprs.bool.ABoolExpr;
 public final class ModelUnavailableError extends Error {
 
     public ModelUnavailableError(Status status, ABoolExpr formula) {
-        super(status == Status.UNKNOWN ? "The satisfiability of the formula \"" + formula + "\" is unknown. Therefore, no model can be produced." : "The formula \"" + formula + "\" is unsatisfiable. Therefore, no model can be produced");
+        super(status == Status.UNKNOWN ? "The satisfiability of the formula \"" + formula + "\" is unknown. Therefore, no model can be produced." : "The formula \"" + formula + "\" is unsatisfiable. Therefore, no model can be produced.");
     }
 
 }
