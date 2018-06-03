@@ -7,6 +7,7 @@ import langs.bevent.exprs.defs.FunDef;
 import langs.bevent.exprs.defs.VarDef;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
+import langs.bevent.substitutions.*;
 
 import java.util.stream.Collectors;
 
@@ -149,6 +150,36 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Range range) {
         return range.getLowerBound().accept(this) + ".." + range.getUpperBound().accept(this);
+    }
+
+    @Override
+    public String visit(Skip skip) {
+        return "SKIP";
+    }
+
+    @Override
+    public String visit(VarAssignment varAssignment) {
+        return varAssignment.getAssignable().accept(this) + " := " + varAssignment.getValue().accept(this);
+    }
+
+    @Override
+    public String visit(FunAssignment funAssignment) {
+        return funAssignment.getAssignable().accept(this) + " := " + funAssignment.getValue().accept(this);
+    }
+
+    @Override
+    public String visit(MultipleAssignment multipleAssignment) {
+        return new Parallel(multipleAssignment.getAssignments().toArray(new AAssignment[0])).accept(this);
+    }
+
+    @Override
+    public String visit(Select select) {
+        return "SELECT " + select.getCondition().accept(this) + " THEN " + select.getSubstitution().accept(this) + " END";
+    }
+
+    @Override
+    public String visit(Parallel parallel) {
+        return parallel.getSubstitutions().stream().map(substitution -> substitution.accept(this)).collect(Collectors.joining(" || "));
     }
 
 }

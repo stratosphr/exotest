@@ -11,16 +11,11 @@ import visitors.formatters.object.IObjectFormatter;
  */
 public final class Fun extends AAssignable {
 
-    private final String name;
     private final AArithExpr param;
 
     public Fun(String name, AArithExpr param) {
-        this.name = name;
+        super(name);
         this.param = param;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public AArithExpr getParam() {

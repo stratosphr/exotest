@@ -11,14 +11,8 @@ import visitors.formatters.object.IObjectFormatter;
  */
 public final class Var extends AAssignable {
 
-    private final String name;
-
     public Var(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
+        super(name);
     }
 
     @Override

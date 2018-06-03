@@ -8,4 +8,14 @@ import visitors.decoders.IModelValueDecodable;
  */
 public abstract class AAssignable extends AArithExpr implements IModelValueDecodable {
 
+    private final String name;
+
+    public AAssignable(String name) {
+        this.name = name;
+    }
+
+    public final String getName() {
+        return name;
+    }
+
 }

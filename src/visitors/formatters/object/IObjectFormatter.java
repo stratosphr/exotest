@@ -7,6 +7,7 @@ import langs.bevent.exprs.defs.FunDef;
 import langs.bevent.exprs.defs.VarDef;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
+import langs.bevent.substitutions.*;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -69,5 +70,18 @@ public interface IObjectFormatter {
     String visit(Set set);
 
     String visit(Range range);
+
+    @SuppressWarnings("SameReturnValue")
+    String visit(Skip skip);
+
+    String visit(VarAssignment varAssignment);
+
+    String visit(FunAssignment funAssignment);
+
+    String visit(MultipleAssignment multipleAssignment);
+
+    String visit(Select select);
+
+    String visit(Parallel parallel);
 
 }
