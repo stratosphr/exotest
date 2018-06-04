@@ -1,19 +1,23 @@
 package langs.bevent.exprs.bool;
 
 import com.microsoft.z3.BoolExpr;
+import langs.bevent.exprs.arith.Var;
+import langs.bevent.exprs.sets.ASetExpr;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.Arrays;
-
 /**
- * Created by gvoiron on 03/06/18.
- * Time : 23:11
+ * Created by gvoiron on 04/06/18.
+ * Time : 14:53
  */
-public final class ForAll extends AQuantifier {
+public final class VarIn extends AIn<Var> {
 
-    public ForAll(ABoolExpr expr, VarIn... quantifiedVarsDefs) {
-        super(new Implies(new And(Arrays.stream(quantifiedVarsDefs).toArray(ABoolExpr[]::new)), expr), quantifiedVarsDefs);
+    public VarIn(Var expr, ASetExpr domain) {
+        super(expr, domain);
+    }
+
+    public Var getVar() {
+        return getExpr();
     }
 
     @Override

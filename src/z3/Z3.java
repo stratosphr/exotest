@@ -16,9 +16,9 @@ public final class Z3 {
     private final static Solver solver = context.mkSimpleSolver();
 
     public static Z3Result checkSAT(ABoolExpr formula) {
-        System.out.println(formula.accept(new Z3Encoder(context)));
         solver.add(formula.accept(new Z3Encoder(context)));
         Status status = solver.check();
+        System.out.println(solver);
         return new Z3Result(formula, status, context, solver);
     }
 

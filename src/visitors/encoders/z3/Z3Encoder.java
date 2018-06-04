@@ -39,7 +39,7 @@ public final class Z3Encoder implements IZ3Encoder {
 
     @Override
     public ArithExpr visit(Fun fun) {
-        return (ArithExpr) context.mkApp(context.mkFuncDecl(fun.getName(), context.getIntSort(), context.getIntSort()), fun.getParam().accept(this));
+        return (ArithExpr) context.mkApp(context.mkFuncDecl(fun.getName(), new Sort[]{context.getIntSort()}, context.getIntSort()), fun.getParam().accept(this));
     }
 
     @Override
@@ -100,6 +100,16 @@ public final class Z3Encoder implements IZ3Encoder {
     @Override
     public <Value extends AArithExpr> BoolExpr visit(In<Value> in) {
         return in.getDomain().accept(new DomainConstraintGenerator(in.getExpr())).accept(this);
+    }
+
+    @Override
+    public BoolExpr visit(VarIn varIn) {
+        return new In<>(varIn.getVar(), varIn.getDomain()).accept(this);
+    }
+
+    @Override
+    public BoolExpr visit(FunIn funIn) {
+        return new In<>(funIn.getFun(), funIn.getDomain()).accept(this);
     }
 
     @Override

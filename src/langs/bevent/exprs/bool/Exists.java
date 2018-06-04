@@ -1,7 +1,6 @@
 package langs.bevent.exprs.bool;
 
 import com.microsoft.z3.BoolExpr;
-import langs.bevent.exprs.defs.VarDef;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
@@ -17,8 +16,8 @@ import java.util.stream.Stream;
  */
 public final class Exists extends AQuantifier {
 
-    public Exists(ABoolExpr expr, VarDef... quantifiedVarsDefs) {
-        super(new And(Stream.of(Arrays.stream(quantifiedVarsDefs).map(varDef -> new In<>(varDef.getVar(), varDef.getDomain())).collect(Collectors.toList()), Collections.singletonList(expr)).flatMap(Collection::stream).toArray(ABoolExpr[]::new)), quantifiedVarsDefs);
+    public Exists(ABoolExpr expr, VarIn... quantifiedVarsDefs) {
+        super(new And(Stream.of(Arrays.stream(quantifiedVarsDefs).collect(Collectors.toList()), Collections.singletonList(expr)).flatMap(Collection::stream).toArray(ABoolExpr[]::new)), quantifiedVarsDefs);
     }
 
     @Override

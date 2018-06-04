@@ -50,6 +50,10 @@ public interface IObjectFormatter {
 
     <Value extends AArithExpr> String visit(In<Value> in);
 
+    String visit(VarIn varIn);
+
+    String visit(FunIn funIn);
+
     String visit(Equals equals);
 
     String visit(NEq nEq);

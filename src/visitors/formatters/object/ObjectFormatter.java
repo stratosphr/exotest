@@ -101,6 +101,16 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
+    public String visit(VarIn varIn) {
+        return new In<>(varIn.getVar(), varIn.getDomain()).accept(this);
+    }
+
+    @Override
+    public String visit(FunIn funIn) {
+        return new In<>(funIn.getFun(), funIn.getDomain()).accept(this);
+    }
+
+    @Override
     public String visit(Equals equals) {
         return equals.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" = "));
     }

@@ -2,7 +2,6 @@ package langs.bevent.exprs.bool;
 
 import errors.InvalidNumberOfQuantifiedVarsError;
 import langs.bevent.exprs.arith.Var;
-import langs.bevent.exprs.defs.VarDef;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,13 +14,13 @@ import java.util.stream.Collectors;
 public abstract class AQuantifier extends ABoolExpr {
 
     private final ABoolExpr expr;
-    private final List<VarDef> quantifiedVarsDefs;
+    private final List<VarIn> quantifiedVarsDefs;
     private final List<Var> quantifiedVars;
 
-    public AQuantifier(ABoolExpr expr, VarDef... quantifiedVarsDefs) {
+    public AQuantifier(ABoolExpr expr, VarIn[] quantifiedVarsDefs) {
         this.expr = expr;
         this.quantifiedVarsDefs = Arrays.asList(quantifiedVarsDefs);
-        this.quantifiedVars = Arrays.stream(quantifiedVarsDefs).map(VarDef::getVar).collect(Collectors.toList());
+        this.quantifiedVars = Arrays.stream(quantifiedVarsDefs).map(AIn::getExpr).collect(Collectors.toList());
         if (quantifiedVarsDefs.length == 0) {
             throw new InvalidNumberOfQuantifiedVarsError(this);
         }
@@ -31,7 +30,7 @@ public abstract class AQuantifier extends ABoolExpr {
         return expr;
     }
 
-    public List<VarDef> getQuantifiedVarsDefs() {
+    public List<VarIn> getQuantifiedVarsDefs() {
         return quantifiedVarsDefs;
     }
 
