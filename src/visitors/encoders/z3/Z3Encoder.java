@@ -1,11 +1,12 @@
 package visitors.encoders.z3;
 
-import com.microsoft.z3.ArithExpr;
-import com.microsoft.z3.BoolExpr;
-import com.microsoft.z3.Context;
+import com.microsoft.z3.*;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import visitors.generators.sets.DomainConstraintGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by gvoiron on 30/05/18.
@@ -14,9 +15,51 @@ import visitors.generators.sets.DomainConstraintGenerator;
 public final class Z3Encoder implements IZ3Encoder {
 
     private final Context context;
+    private List<Var> quantifiedVars;
 
     public Z3Encoder(Context context) {
         this.context = context;
+        this.quantifiedVars = new ArrayList<>();
+    }
+
+    @Override
+    public ArithExpr visit(Int anInt) {
+        return context.mkInt(anInt.getValue());
+    }
+
+    @Override
+    public ArithExpr visit(Const aConst) {
+        return context.mkIntConst(aConst.getName());
+    }
+
+    @Override
+    public ArithExpr visit(Var var) {
+        return quantifiedVars.contains(var) ? (ArithExpr) context.mkBound(quantifiedVars.size() - quantifiedVars.indexOf(var) - 1, context.getIntSort()) : context.mkIntConst(var.getName());
+    }
+
+    @Override
+    public ArithExpr visit(Fun fun) {
+        return (ArithExpr) context.mkApp(context.mkFuncDecl(fun.getName(), context.getIntSort(), context.getIntSort()), fun.getParam().accept(this));
+    }
+
+    @Override
+    public ArithExpr visit(Plus plus) {
+        return context.mkAdd(plus.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
+    }
+
+    @Override
+    public ArithExpr visit(Minus minus) {
+        return context.mkSub(minus.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
+    }
+
+    @Override
+    public ArithExpr visit(Times times) {
+        return context.mkMul(times.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
+    }
+
+    @Override
+    public ArithExpr visit(Div div) {
+        return context.mkDiv(div.getLeft().accept(this), div.getRight().accept(this));
     }
 
     @Override
@@ -61,7 +104,7 @@ public final class Z3Encoder implements IZ3Encoder {
 
     @Override
     public BoolExpr visit(Equals equals) {
-        return context.mkAnd(equals.getOperands().subList(1, equals.getOperands().size()).stream().map(operand -> context.mkEq(operand.accept(this), equals.getOperands().get(0).accept(this))).toArray(BoolExpr[]::new));
+        return equals.getOperands().size() == 2 ? context.mkEq(equals.getOperands().get(0).accept(this), equals.getOperands().get(1).accept(this)) : context.mkAnd(equals.getOperands().subList(1, equals.getOperands().size()).stream().map(operand -> context.mkEq(operand.accept(this), equals.getOperands().get(0).accept(this))).toArray(BoolExpr[]::new));
     }
 
     @Override
@@ -90,43 +133,23 @@ public final class Z3Encoder implements IZ3Encoder {
     }
 
     @Override
-    public ArithExpr visit(Int anInt) {
-        return context.mkInt(anInt.getValue());
+    public BoolExpr visit(Exists exists) {
+        quantifiedVars.addAll(exists.getQuantifiedVars());
+        Sort[] sorts = exists.getQuantifiedVars().stream().map(var -> context.getIntSort()).toArray(Sort[]::new);
+        Symbol[] symbols = exists.getQuantifiedVars().stream().map(var -> context.mkSymbol(var.getName())).toArray(Symbol[]::new);
+        BoolExpr expr = exists.getExpr().accept(this);
+        quantifiedVars = quantifiedVars.subList(0, quantifiedVars.size() - exists.getQuantifiedVarsDefs().size());
+        return context.mkExists(sorts, symbols, expr, 0, null, null, null, null);
     }
 
     @Override
-    public ArithExpr visit(Const aConst) {
-        return context.mkIntConst(aConst.getName());
-    }
-
-    @Override
-    public ArithExpr visit(Var var) {
-        return context.mkIntConst(var.getName());
-    }
-
-    @Override
-    public ArithExpr visit(Fun fun) {
-        return (ArithExpr) context.mkApp(context.mkFuncDecl(fun.getName(), context.mkIntSort(), context.mkIntSort()), fun.getParam().accept(this));
-    }
-
-    @Override
-    public ArithExpr visit(Plus plus) {
-        return context.mkAdd(plus.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
-    }
-
-    @Override
-    public ArithExpr visit(Minus minus) {
-        return context.mkSub(minus.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
-    }
-
-    @Override
-    public ArithExpr visit(Times times) {
-        return context.mkMul(times.getOperands().stream().map(operand -> operand.accept(this)).toArray(ArithExpr[]::new));
-    }
-
-    @Override
-    public ArithExpr visit(Div div) {
-        return context.mkDiv(div.getLeft().accept(this), div.getRight().accept(this));
+    public BoolExpr visit(ForAll forAll) {
+        quantifiedVars.addAll(forAll.getQuantifiedVars());
+        Sort[] sorts = forAll.getQuantifiedVars().stream().map(var -> context.getIntSort()).toArray(Sort[]::new);
+        Symbol[] symbols = forAll.getQuantifiedVars().stream().map(var -> context.mkSymbol(var.getName())).toArray(Symbol[]::new);
+        BoolExpr expr = forAll.getExpr().accept(this);
+        quantifiedVars = quantifiedVars.subList(0, quantifiedVars.size() - forAll.getQuantifiedVarsDefs().size());
+        return context.mkForall(sorts, symbols, expr, 0, null, null, null, null);
     }
 
 }

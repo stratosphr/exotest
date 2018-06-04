@@ -4,6 +4,7 @@ import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
+import langs.bevent.exprs.sets.Z;
 
 /**
  * Created by gvoiron on 30/05/18.
@@ -15,6 +16,11 @@ public final class DomainConstraintGenerator implements IDomainConstraintGenerat
 
     public DomainConstraintGenerator(AArithExpr expr) {
         this.expr = expr;
+    }
+
+    @Override
+    public ABoolExpr visit(Z z) {
+        return new True();
     }
 
     @Override

@@ -54,4 +54,9 @@ public interface IZ3Encoder {
     BoolExpr visit(GT gt);
 
     BoolExpr visit(GEq gEq);
+
+    BoolExpr visit(Exists exists);
+
+    BoolExpr visit(ForAll forAll);
+
 }

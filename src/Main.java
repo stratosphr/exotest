@@ -1,26 +1,43 @@
 import langs.bevent.exprs.arith.Fun;
 import langs.bevent.exprs.arith.Int;
-import langs.bevent.exprs.arith.Plus;
 import langs.bevent.exprs.arith.Var;
-import langs.bevent.exprs.bool.And;
-import langs.bevent.exprs.bool.Equals;
-import langs.bevent.exprs.bool.False;
-import langs.bevent.substitutions.FunAssignment;
-import langs.bevent.substitutions.MultipleAssignment;
-import langs.bevent.substitutions.Select;
-import langs.bevent.substitutions.VarAssignment;
+import langs.bevent.exprs.bool.*;
+import langs.bevent.exprs.defs.VarDef;
+import langs.bevent.exprs.sets.Range;
+import langs.bevent.exprs.sets.Set;
+import langs.bevent.exprs.sets.Z;
+import z3.Z3;
+import z3.Z3Result;
 
 import java.util.Arrays;
-import java.util.HashSet;
 
 public class Main {
 
     public static void main(String[] args) {
-        VarAssignment var = new VarAssignment(new Var("bat1"), new Plus(new Int(42), new Int(2)));
-        FunAssignment fun = new FunAssignment(new Fun("bat", new Int(1)), new Plus(new Int(42), new Int(2)));
-        VarAssignment var2 = new VarAssignment(new Var("v1"), new Plus(new Int(42), new Int(2)));
-        Select select = new Select(new And(new False(), new Equals(new Var("v1"), new Int(42))), new MultipleAssignment(var, fun, var2));
-        System.out.println(select.getPrd(new HashSet<>(Arrays.asList(new Var("v1"), new Fun("bat", new Int(1)), new Var("bat1")))));
+        ABoolExpr invariant = new And(
+                new ForAll(
+                        new Equiv(
+                                new In<>(new Fun("bat", new Var("i")), new Set(new Int(0), new Int(1))),
+                                new In<>(new Var("i"), new Range(new Int(1), new Int(3)))
+                        ),
+                        new VarDef(new Var("i"), new Z())
+                )
+        );
+        Exists exists = new Exists(
+                new And(
+                        new NEq(new Var("i"), new Var("j")),
+                        new Equals(new Fun("bat", new Var("i")), new Int(1)),
+                        new Equals(new Fun("bat", new Var("j")), new Int(1))
+                ),
+                new VarDef(new Var("i"), new Range(new Int(1), new Int(3))),
+                new VarDef(new Var("j"), new Range(new Int(1), new Int(3)))
+        );
+        ABoolExpr constraint = new And(
+                new Equals(new Fun("bat", new Int(2)), new Int(0))
+        );
+        System.out.println(new And(invariant, exists, constraint));
+        Z3Result r1 = Z3.checkSAT(new And(invariant, exists, constraint));
+        System.out.println(r1.getModel(Arrays.asList(new Fun("bat", new Int(1)), new Fun("bat", new Int(2)), new Fun("bat", new Int(3)))));
     }
 
 }

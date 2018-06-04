@@ -2,6 +2,7 @@
   <dictionary name="gvoiron">
     <words>
       <w>decodable</w>
+      <w>eqdef</w>
     </words>
   </dictionary>
 </component>

@@ -7,6 +7,7 @@ import langs.bevent.exprs.defs.FunDef;
 import langs.bevent.exprs.defs.VarDef;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
+import langs.bevent.exprs.sets.Z;
 import langs.bevent.substitutions.*;
 
 /**
@@ -61,11 +62,17 @@ public interface IObjectFormatter {
 
     String visit(GEq gEq);
 
+    String visit(Exists exists);
+
+    String visit(ForAll forAll);
+
     String visit(ConstDef constDef);
 
     String visit(VarDef varDef);
 
     String visit(FunDef funDef);
+
+    String visit(Z z);
 
     String visit(Set set);
 

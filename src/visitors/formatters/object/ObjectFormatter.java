@@ -7,9 +7,12 @@ import langs.bevent.exprs.defs.FunDef;
 import langs.bevent.exprs.defs.VarDef;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
+import langs.bevent.exprs.sets.Z;
 import langs.bevent.substitutions.*;
 
 import java.util.stream.Collectors;
+
+import static utilities.Chars.*;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -74,12 +77,12 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(And and) {
-        return and.getOperands().isEmpty() ? new False().accept(this) : and.getOperands().size() == 1 ? and.getOperands().get(0).accept(this) : and.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" and ", "(", ")"));
+        return and.getOperands().isEmpty() ? new False().accept(this) : and.getOperands().size() == 1 ? and.getOperands().get(0).accept(this) : and.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" " + AND + " ", "(", ")"));
     }
 
     @Override
     public String visit(Or or) {
-        return or.getOperands().isEmpty() ? new True().accept(this) : or.getOperands().size() == 1 ? or.getOperands().get(0).accept(this) : or.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" or ", "(", ")"));
+        return or.getOperands().isEmpty() ? new True().accept(this) : or.getOperands().size() == 1 ? or.getOperands().get(0).accept(this) : or.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" " + OR + " ", "(", ")"));
     }
 
     @Override
@@ -94,17 +97,17 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public <Value extends AArithExpr> String visit(In<Value> in) {
-        return in.getExpr().accept(this) + " in " + in.getDomain().accept(this);
+        return in.getExpr().accept(this) + " " + IN + " " + in.getDomain().accept(this);
     }
 
     @Override
     public String visit(Equals equals) {
-        return equals.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" = ", "(", ")"));
+        return equals.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" = "));
     }
 
     @Override
     public String visit(NEq nEq) {
-        return new Not(new Equals(nEq.getLeft(), nEq.getRight())).accept(this);
+        return nEq.getLeft().accept(this) + " " + NEQ + " " + nEq.getRight().accept(this);
     }
 
     @Override
@@ -114,7 +117,7 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(LEq lEq) {
-        return lEq.getLeft().accept(this) + " <= " + lEq.getRight().accept(this);
+        return lEq.getLeft().accept(this) + " " + LEQ + " " + lEq.getRight().accept(this);
     }
 
     @Override
@@ -124,12 +127,22 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(GEq gEq) {
-        return gEq.getLeft().accept(this) + " >= " + gEq.getRight().accept(this);
+        return gEq.getLeft().accept(this) + " " + GEQ + " " + gEq.getRight().accept(this);
+    }
+
+    @Override
+    public String visit(Exists exists) {
+        return EXISTS + "(" + exists.getQuantifiedVars().stream().map(AAssignable::getName).collect(Collectors.joining(", ")) + ").(" + exists.getExpr().accept(this) + ")";
+    }
+
+    @Override
+    public String visit(ForAll forAll) {
+        return FORALL + "(" + forAll.getQuantifiedVars().stream().map(AAssignable::getName).collect(Collectors.joining(", ")) + ").(" + forAll.getExpr().accept(this) + ")";
     }
 
     @Override
     public String visit(ConstDef constDef) {
-        return new Equals(constDef.getConst(), constDef.getValue()).accept(this);
+        return constDef.getConst().accept(this) + " " + EQDEF + " " + constDef.getValue().accept(this);
     }
 
     @Override
@@ -140,6 +153,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(FunDef funDef) {
         return funDef.getName() + " : " + funDef.getDomain().accept(this) + " --> " + funDef.getCodomain().accept(this);
+    }
+
+    @Override
+    public String visit(Z z) {
+        return String.valueOf(Z);
     }
 
     @Override
