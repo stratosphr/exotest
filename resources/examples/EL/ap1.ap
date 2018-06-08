@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<predicates xmlns="ap">
+    <predicate name="p0">
+        <exists>
+            <vars-defs>
+                <var-def name="i">
+                    <range>
+                        <int value="1"/>
+                        <const name="n"/>
+                    </range>
+                </var-def>
+                <var-def name="j">
+                    <range>
+                        <int value="1"/>
+                        <const name="n"/>
+                    </range>
+                </var-def>
+            </vars-defs>
+            <and>
+                <neq>
+                    <var name="i"/>
+                    <var name="j"/>
+                </neq>
+                <equals>
+                    <fun name="bat">
+                        <var name="i"/>
+                    </fun>
+                    <enum-value name="ok"/>
+                </equals>
+                <equals>
+                    <fun name="bat">
+                        <var name="j"/>
+                    </fun>
+                    <enum-value name="ok"/>
+                </equals>
+                <equals>
+                    <var name="h"/>
+                    <enum-value name="tic"/>
+                </equals>
+            </and>
+        </exists>
+    </predicate>
+    <predicate name="p1">
+        <equals>
+            <var name="h"/>
+            <enum-value name="tac"/>
+        </equals>
+    </predicate>
+</predicates>

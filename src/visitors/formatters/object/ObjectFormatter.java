@@ -1,5 +1,6 @@
 package visitors.formatters.object;
 
+import langs.bevent.Machine;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.ConstDef;
@@ -208,6 +209,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Parallel parallel) {
         return parallel.getSubstitutions().stream().map(substitution -> substitution.accept(this)).collect(Collectors.joining(" || "));
+    }
+
+    @Override
+    public String visit(Machine machine) {
+        return null;
     }
 
 }

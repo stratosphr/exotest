@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<relevance xmlns="rel">
+
+    <relevance-predicate>
+        <var-increases>
+            <var name="De"/>
+        </var-increases>
+
+        <var-decreases>
+            <var name="Us"/>
+        </var-decreases>
+
+        <var-increases>
+            <var name="Do"/>
+        </var-increases>
+
+        <var-increases>
+            <var name="Lo"/>
+        </var-increases>
+
+        <var-decreases>
+            <var name="Lo"/>
+        </var-decreases>
+
+        <var-increases>
+            <var name="AC"/>
+        </var-increases>
+    </relevance-predicate>
+
+    <expected-states>
+        <all-states/>
+    </expected-states>
+
+    <expected-transitions>
+        <transition>
+            <state name="q0"/>
+            <event name="Alarm_Deactivation"/>
+            <state name="q4"/>
+        </transition>
+        <transition>
+            <state name="q9"/>
+            <event name="User_Authorized"/>
+            <state name="q0"/>
+        </transition>
+    </expected-transitions>
+
+</relevance>

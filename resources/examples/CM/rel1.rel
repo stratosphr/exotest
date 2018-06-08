@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<relevance xmlns="rel">
+
+    <relevance-predicate>
+
+        <var-increases>
+            <var name="Balance"/>
+        </var-increases>
+
+        <var-decreases>
+            <var name="CoffeeLeft"/>
+        </var-decreases>
+
+        <var-changes>
+            <var name="AskCoffee"/>
+            <int value="0"/>
+            <int value="1"/>
+        </var-changes>
+
+    </relevance-predicate>
+
+    <expected-states>
+        <all-states/>
+    </expected-states>
+
+    <expected-transitions>
+        <transition>
+            <state name="q4"/>
+            <event name="serveCoffee"/>
+            <state name="q0"/>
+        </transition>
+    </expected-transitions>
+
+</relevance>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<relevance xmlns="rel">
+
+    <relevance-predicate>
+
+        <var-increases>
+            <var name="Balance"/>
+        </var-increases>
+
+        <var-decreases>
+            <var name="CofLeft"/>
+        </var-decreases>
+
+        <var-changes>
+            <var name="AskCof"/>
+            <int value="0"/>
+            <int value="1"/>
+        </var-changes>
+
+    </relevance-predicate>
+
+    <expected-states>
+        <all-states/>
+    </expected-states>
+
+    <expected-transitions>
+        <transition>
+            <state name="q2"/>
+            <event name="serveCof"/>
+            <state name="q1"/>
+        </transition>
+        <transition>
+            <state name="q1"/>
+            <event name="powerDown"/>
+            <state name="q4"/>
+        </transition>
+    </expected-transitions>
+
+</relevance>

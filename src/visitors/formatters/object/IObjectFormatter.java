@@ -1,5 +1,6 @@
 package visitors.formatters.object;
 
+import langs.bevent.Machine;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.ConstDef;
@@ -94,5 +95,7 @@ public interface IObjectFormatter {
     String visit(Select select);
 
     String visit(Parallel parallel);
+
+    String visit(Machine machine);
 
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<predicates xmlns="ap">
+
+    <predicate name="p0">
+        <equals>
+            <fun name="PE">
+                <int value="3"/>
+            </fun>
+            <enum-value name="ouvertes"/>
+        </equals>
+    </predicate>
+
+    <predicate name="Appel_Montee_Cabine">
+        <equals>
+            <fun name="BC">
+                <int value="3"/>
+            </fun>
+            <int value="0"/>
+        </equals>
+    </predicate>
+
+</predicates>
+
