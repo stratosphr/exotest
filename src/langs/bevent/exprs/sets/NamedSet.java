@@ -1,6 +1,5 @@
 package langs.bevent.exprs.sets;
 
-import langs.bevent.exprs.AExpr;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.bool.ABoolExpr;
@@ -8,32 +7,29 @@ import visitors.computers.IElementsComputer;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.generators.sets.IDomainConstraintGenerator;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * Created by gvoiron on 26/05/18.
- * Time : 11:25
+ * Created by gvoiron on 08/06/18.
+ * Time : 10:58
  */
-public final class Set extends AFiniteSetExpr {
+public final class NamedSet extends AFiniteSetExpr {
 
-    private final List<AArithExpr> elements;
+    private String name;
 
-    public Set(AArithExpr... elements) {
-        this.elements = Arrays.stream(elements).distinct().collect(Collectors.toList());
+    public NamedSet(String name) {
+        this.name = name;
     }
 
-    public List<AArithExpr> getElements() {
-        return elements;
+    public String getName() {
+        return name;
     }
 
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
     }
-
 
     @Override
     public ABoolExpr accept(IDomainConstraintGenerator generator) {
@@ -47,7 +43,7 @@ public final class Set extends AFiniteSetExpr {
 
     @Override
     public List<Const> getRequiredConsts() {
-        return getElements().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).collect(Collectors.toList());
+        return Collections.emptyList();
     }
 
 }

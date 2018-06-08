@@ -5,14 +5,23 @@ import langs.bevent.exprs.arith.Const;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by gvoiron on 25/05/18.
- * Time : 17:51
+ * Created by gvoiron on 08/06/18.
+ * Time : 09:51
  */
-public final class False extends ABoolExpr {
+public final class Invariant extends ABoolExpr {
+
+    private ABoolExpr expr;
+
+    public Invariant(ABoolExpr expr) {
+        this.expr = expr;
+    }
+
+    public ABoolExpr getExpr() {
+        return expr;
+    }
 
     @Override
     public String accept(IObjectFormatter formatter) {
@@ -26,7 +35,7 @@ public final class False extends ABoolExpr {
 
     @Override
     public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+        return expr.getRequiredConsts();
     }
 
 }

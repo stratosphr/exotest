@@ -5,6 +5,8 @@ import visitors.decoders.IModelValueDecoder;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 
+import java.util.List;
+
 /**
  * Created by gvoiron on 25/05/18.
  * Time : 17:51
@@ -35,6 +37,11 @@ public final class Fun extends AAssignable {
     @Override
     public AValue accept(IModelValueDecoder decoder) {
         return decoder.visit(this);
+    }
+
+    @Override
+    public List<Const> getRequiredConsts() {
+        return getParam().getRequiredConsts();
     }
 
 }

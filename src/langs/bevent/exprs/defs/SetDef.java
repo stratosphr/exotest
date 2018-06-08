@@ -1,28 +1,19 @@
 package langs.bevent.exprs.defs;
 
 import langs.bevent.exprs.arith.Const;
-import langs.bevent.exprs.arith.Var;
 import langs.bevent.exprs.sets.AFiniteSetExpr;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by gvoiron on 26/05/18.
- * Time : 11:16
+ * Created by gvoiron on 08/06/18.
+ * Time : 10:20
  */
-public final class VarDef extends ADef {
+public final class SetDef extends ADef {
 
-    private final Var var;
-
-    public VarDef(Var var, AFiniteSetExpr domain) {
-        super(var.getName(), domain);
-        this.var = var;
-    }
-
-    public Var getVar() {
-        return var;
+    public SetDef(String name, AFiniteSetExpr domain) {
+        super(name, domain);
     }
 
     @Override
@@ -32,7 +23,7 @@ public final class VarDef extends ADef {
 
     @Override
     public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+        return getDomain().getRequiredConsts();
     }
 
 }

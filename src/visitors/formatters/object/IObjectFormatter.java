@@ -1,11 +1,14 @@
 package visitors.formatters.object;
 
+import langs.bevent.Event;
 import langs.bevent.Machine;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.ConstDef;
 import langs.bevent.exprs.defs.FunDef;
+import langs.bevent.exprs.defs.SetDef;
 import langs.bevent.exprs.defs.VarDef;
+import langs.bevent.exprs.sets.NamedSet;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 import langs.bevent.exprs.sets.Z;
@@ -32,6 +35,8 @@ public interface IObjectFormatter {
     String visit(Times times);
 
     String visit(Div div);
+
+    String visit(Invariant invariant);
 
     @SuppressWarnings("SameReturnValue")
     String visit(False aFalse);
@@ -77,11 +82,15 @@ public interface IObjectFormatter {
 
     String visit(FunDef funDef);
 
+    String visit(SetDef setDef);
+
     String visit(Z z);
 
     String visit(Set set);
 
     String visit(Range range);
+
+    String visit(NamedSet namedSet);
 
     @SuppressWarnings("SameReturnValue")
     String visit(Skip skip);
@@ -97,5 +106,7 @@ public interface IObjectFormatter {
     String visit(Parallel parallel);
 
     String visit(Machine machine);
+
+    String visit(Event event);
 
 }

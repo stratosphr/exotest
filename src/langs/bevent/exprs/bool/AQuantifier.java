@@ -1,6 +1,7 @@
 package langs.bevent.exprs.bool;
 
 import errors.InvalidNumberOfQuantifiedVarsError;
+import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.arith.Var;
 
 import java.util.Arrays;
@@ -36,6 +37,11 @@ public abstract class AQuantifier extends ABoolExpr {
 
     public List<Var> getQuantifiedVars() {
         return quantifiedVars;
+    }
+
+    @Override
+    public final List<Const> getRequiredConsts() {
+        return getExpr().getRequiredConsts();
     }
 
 }

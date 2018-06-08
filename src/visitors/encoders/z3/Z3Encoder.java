@@ -63,6 +63,11 @@ public final class Z3Encoder implements IZ3Encoder {
     }
 
     @Override
+    public BoolExpr visit(Invariant invariant) {
+        return invariant.getExpr().accept(this);
+    }
+
+    @Override
     public BoolExpr visit(False aFalse) {
         return context.mkFalse();
     }

@@ -1,7 +1,9 @@
 package visitors.generators.sets;
 
+import langs.bevent.Machine;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.bool.*;
+import langs.bevent.exprs.sets.NamedSet;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 import langs.bevent.exprs.sets.Z;
@@ -31,6 +33,11 @@ public final class DomainConstraintGenerator implements IDomainConstraintGenerat
     @Override
     public ABoolExpr visit(Range range) {
         return new And(new GEq(expr, range.getLowerBound()), new LEq(expr, range.getUpperBound()));
+    }
+
+    @Override
+    public ABoolExpr visit(NamedSet namedSet) {
+        return Machine.getSingleton().getDefs().get(namedSet.getName()).getDomain().accept(this);
     }
 
 }

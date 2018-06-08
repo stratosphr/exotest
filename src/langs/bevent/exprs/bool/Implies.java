@@ -1,8 +1,8 @@
 package langs.bevent.exprs.bool;
 
 import com.microsoft.z3.BoolExpr;
-import visitors.formatters.object.IObjectFormatter;
 import visitors.encoders.z3.IZ3Encoder;
+import visitors.formatters.object.IObjectFormatter;
 
 /**
  * Created by gvoiron on 26/05/18.

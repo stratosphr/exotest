@@ -1,9 +1,11 @@
 package langs.bevent.exprs.defs;
 
-import visitors.formatters.object.IObjectFormatter;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.sets.Set;
+import visitors.formatters.object.IObjectFormatter;
+
+import java.util.List;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -31,6 +33,11 @@ public final class ConstDef extends ADef {
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
+    }
+
+    @Override
+    public List<Const> getRequiredConsts() {
+        return getValue().getRequiredConsts();
     }
 
 }

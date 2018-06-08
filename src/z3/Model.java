@@ -5,7 +5,6 @@ import langs.bevent.exprs.arith.*;
 import visitors.decoders.IModelValueDecoder;
 import visitors.encoders.z3.Z3Encoder;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -21,7 +20,6 @@ public final class Model extends TreeMap<AAssignable, AValue> implements IModelV
     public Model(com.microsoft.z3.Model model, Context context, List<? extends AAssignable> assignables) {
         this.model = model;
         this.context = context;
-        System.out.println(Arrays.toString(model.getConstDecls()));
         assignables.forEach(var -> put(var, var.accept(this)));
     }
 

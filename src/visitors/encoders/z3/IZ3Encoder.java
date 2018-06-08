@@ -27,6 +27,8 @@ public interface IZ3Encoder {
 
     ArithExpr visit(Div div);
 
+    BoolExpr visit(Invariant invariant);
+
     BoolExpr visit(False aFalse);
 
     BoolExpr visit(True aTrue);

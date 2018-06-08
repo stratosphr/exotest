@@ -1,11 +1,14 @@
 package visitors.formatters.object;
 
+import langs.bevent.Event;
 import langs.bevent.Machine;
 import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.ConstDef;
 import langs.bevent.exprs.defs.FunDef;
+import langs.bevent.exprs.defs.SetDef;
 import langs.bevent.exprs.defs.VarDef;
+import langs.bevent.exprs.sets.NamedSet;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 import langs.bevent.exprs.sets.Z;
@@ -59,6 +62,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Div div) {
         return div.getOperands().stream().map(operand -> operand.accept(this)).collect(Collectors.joining(" / ", "(", ")"));
+    }
+
+    @Override
+    public String visit(Invariant invariant) {
+        return invariant.getExpr().accept(this);
     }
 
     @Override
@@ -158,12 +166,17 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(VarDef varDef) {
-        return new In<>(varDef.getVar(), varDef.getDomain()).accept(this);
+        return new VarIn(varDef.getVar(), varDef.getDomain()).accept(this);
     }
 
     @Override
     public String visit(FunDef funDef) {
         return funDef.getName() + " : " + funDef.getDomain().accept(this) + " --> " + funDef.getCodomain().accept(this);
+    }
+
+    @Override
+    public String visit(SetDef setDef) {
+        return setDef.getName() + " " + EQDEF + " " + setDef.getDomain().accept(this);
     }
 
     @Override
@@ -179,6 +192,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     @Override
     public String visit(Range range) {
         return range.getLowerBound().accept(this) + ".." + range.getUpperBound().accept(this);
+    }
+
+    @Override
+    public String visit(NamedSet namedSet) {
+        return namedSet.getName();
     }
 
     @Override
@@ -213,6 +231,25 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(Machine machine) {
+        return machine.getName() + "\n" +
+                "CONSTS DEFS" + "\n" +
+                machine.getConstsDefs().stream().map(constDef -> constDef.accept(this)).collect(Collectors.joining("\n")) + "\n" +
+                "SETS DEFS" + "\n" +
+                machine.getSetsDefs().stream().map(setDef -> setDef.accept(this)).collect(Collectors.joining("\n")) + "\n" +
+                "VARS DEFS" + "\n" +
+                machine.getVarsDefs().stream().map(varDef -> varDef.accept(this)).collect(Collectors.joining("\n")) + "\n" +
+                "FUNS DEFS" + "\n" +
+                machine.getFunsDefs().stream().map(varDef -> varDef.accept(this)).collect(Collectors.joining("\n")) + "\n" +
+                "INVARIANT" + "\n" +
+                machine.getInvariant() + "\n" +
+                "INITIALISATION" + "\n" +
+                machine.getInitialisation().accept(this) + "\n" +
+                "EVENTS" + "\n" +
+                machine.getEvents().stream().map(event -> event.accept(this)).collect(Collectors.joining("\n"));
+    }
+
+    @Override
+    public String visit(Event event) {
         return null;
     }
 

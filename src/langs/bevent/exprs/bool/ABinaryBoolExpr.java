@@ -1,8 +1,13 @@
 package langs.bevent.exprs.bool;
 
 import langs.bevent.exprs.AExpr;
+import langs.bevent.exprs.arith.Const;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -25,6 +30,11 @@ public abstract class ABinaryBoolExpr<Operand extends AExpr> extends ANaryBoolEx
 
     public final Operand getRight() {
         return right;
+    }
+
+    @Override
+    public final List<Const> getRequiredConsts() {
+        return Stream.of(getLeft().getRequiredConsts(), getRight().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
 }
