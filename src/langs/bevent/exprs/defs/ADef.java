@@ -1,7 +1,7 @@
 package langs.bevent.exprs.defs;
 
 import langs.bevent.exprs.AExpr;
-import langs.bevent.exprs.sets.ASetExpr;
+import langs.bevent.exprs.sets.AFiniteSetExpr;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -10,9 +10,9 @@ import langs.bevent.exprs.sets.ASetExpr;
 public abstract class ADef extends AExpr {
 
     private final String name;
-    private final ASetExpr domain;
+    private final AFiniteSetExpr domain;
 
-    public ADef(String name, ASetExpr domain) {
+    public ADef(String name, AFiniteSetExpr domain) {
         this.name = name;
         this.domain = domain;
     }
@@ -21,7 +21,7 @@ public abstract class ADef extends AExpr {
         return name;
     }
 
-    public ASetExpr getDomain() {
+    public AFiniteSetExpr getDomain() {
         return domain;
     }
 

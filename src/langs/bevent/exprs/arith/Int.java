@@ -11,14 +11,8 @@ import visitors.formatters.object.IObjectFormatter;
  */
 public final class Int extends AValue {
 
-    private final Integer value;
-
     public Int(Integer value) {
-        this.value = value;
-    }
-
-    public Integer getValue() {
-        return value;
+        super(value);
     }
 
     @Override

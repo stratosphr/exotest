@@ -18,7 +18,7 @@ public final class Model extends TreeMap<AAssignable, AValue> implements IModelV
     private final com.microsoft.z3.Model model;
     private final Context context;
 
-    public Model(com.microsoft.z3.Model model, Context context, List<AAssignable> assignables) {
+    public Model(com.microsoft.z3.Model model, Context context, List<? extends AAssignable> assignables) {
         this.model = model;
         this.context = context;
         System.out.println(Arrays.toString(model.getConstDecls()));

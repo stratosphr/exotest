@@ -1,7 +1,8 @@
 package langs.bevent.exprs.defs;
 
-import visitors.formatters.object.IObjectFormatter;
+import langs.bevent.exprs.sets.AFiniteSetExpr;
 import langs.bevent.exprs.sets.ASetExpr;
+import visitors.formatters.object.IObjectFormatter;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -11,7 +12,7 @@ public final class FunDef extends ADef {
 
     private final ASetExpr codomain;
 
-    public FunDef(String name, ASetExpr domain, ASetExpr codomain) {
+    public FunDef(String name, AFiniteSetExpr domain, ASetExpr codomain) {
         super(name, domain);
         this.codomain = codomain;
     }

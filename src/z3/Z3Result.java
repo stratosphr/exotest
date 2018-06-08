@@ -45,7 +45,7 @@ public final class Z3Result {
         return status == UNSATISFIABLE;
     }
 
-    public Model getModel(List<AAssignable> vars) {
+    public Model getModel(List<? extends AAssignable> vars) {
         if (status == SATISFIABLE) {
             return new Model(solver.getModel(), context, vars);
         } else {

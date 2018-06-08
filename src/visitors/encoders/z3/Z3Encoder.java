@@ -94,7 +94,7 @@ public final class Z3Encoder implements IZ3Encoder {
 
     @Override
     public BoolExpr visit(Equiv equiv) {
-        return context.mkEq(equiv.getLeft().accept(this), equiv.getRight().accept(this));
+        return new And(new Implies(equiv.getLeft(), equiv.getRight()), new Implies(equiv.getRight(), equiv.getLeft())).accept(this);
     }
 
     @Override

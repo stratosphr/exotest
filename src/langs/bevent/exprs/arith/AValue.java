@@ -5,4 +5,15 @@ package langs.bevent.exprs.arith;
  * Time : 15:49
  */
 public abstract class AValue extends AArithExpr {
+
+    private Integer value;
+
+    public AValue(Integer value) {
+        this.value = value;
+    }
+
+    public final Integer getValue() {
+        return value;
+    }
+
 }
