@@ -1,30 +1,26 @@
 package langs.bevent;
 
-import errors.UndefinedConstantError;
 import errors.UninitializedMachineError;
 import langs.AObject;
-import langs.bevent.exprs.arith.*;
+import langs.bevent.exprs.arith.AAssignable;
+import langs.bevent.exprs.arith.Fun;
+import langs.bevent.exprs.arith.Var;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.*;
-import langs.bevent.exprs.sets.*;
-import langs.bevent.exprs.sets.Set;
+import langs.bevent.exprs.sets.Z;
 import langs.bevent.substitutions.ASubstitution;
-import utilities.Maths;
-import utilities.Streams;
-import visitors.computers.IElementsComputer;
+import visitors.computers.SetElementsComputer;
 import visitors.formatters.object.IObjectFormatter;
-import z3.Model;
-import z3.Z3;
-import z3.Z3Result;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by gvoiron on 08/06/18.
  * Time : 09:42
  */
-public final class Machine extends AObject implements IElementsComputer {
+public final class Machine extends AObject {
 
     private static Machine singleton;
     private final String name;
@@ -45,10 +41,13 @@ public final class Machine extends AObject implements IElementsComputer {
         this.varsDefs = varsDefs.stream().distinct().collect(Collectors.toList());
         this.funsDefs = funsDefs.stream().distinct().collect(Collectors.toList());
         this.defs = new LinkedHashMap<>();
-        getConstsDefs().forEach(constDef -> defs.put(constDef.getName(), constDef));
-        getSetsDefs().forEach(setDef -> defs.put(setDef.getName(), setDef));
-        getVarsDefs().forEach(varDef -> defs.put(varDef.getName(), varDef));
-        getFunsDefs().forEach(funDef -> defs.put(funDef.getName(), funDef));
+        Stream.of(getConstsDefs(), getSetsDefs(), getVarsDefs(), getFunsDefs()).flatMap(Collection::stream).forEach(def -> {
+            if (defs.containsKey(def.getName())) {
+                throw new Error("Symbol \"" + def.getName() + "\" was already defined in this scope.");
+            } else {
+                defs.put(def.getName(), def);
+            }
+        });
         this.invariant = new Invariant(new And(
                 new And(getConstsDefs().stream().map(constDef -> new Equals(constDef.getConst(), constDef.getValue())).toArray(ABoolExpr[]::new)),
                 new And(getVarsDefs().stream().map(varDef -> new VarIn(varDef.getVar(), varDef.getDomain())).toArray(ABoolExpr[]::new)),
@@ -69,7 +68,7 @@ public final class Machine extends AObject implements IElementsComputer {
     public static Machine build(String name, List<ConstDef> constsDefs, List<SetDef> setsDefs, List<VarDef> varsDefs, List<FunDef> funsDefs, Invariant invariant, ASubstitution initialisation, List<Event> events) {
         singleton = new Machine(name, constsDefs, setsDefs, varsDefs, funsDefs, invariant, initialisation, events);
         singleton.getVarsDefs().forEach(varDef -> singleton.assignables.add(varDef.getVar()));
-        singleton.getFunsDefs().forEach(funDef -> funDef.getDomain().accept(singleton).forEach(expr -> singleton.assignables.add(new Fun(funDef.getName(), expr))));
+        singleton.getFunsDefs().forEach(funDef -> funDef.getDomain().accept(new SetElementsComputer()).forEach(expr -> singleton.assignables.add(new Fun(funDef.getName(), expr))));
         return singleton;
     }
 
@@ -123,44 +122,6 @@ public final class Machine extends AObject implements IElementsComputer {
     @Override
     public String accept(IObjectFormatter formatter) {
         return formatter.visit(this);
-    }
-
-    private void assertRequiredConstsDefined(AFiniteSetExpr expr) {
-        List<Const> requiredConsts = expr.getRequiredConsts();
-        List<Const> missingConsts = requiredConsts.stream().filter(aConst -> !getDefs().keySet().contains(aConst.getName())).collect(Collectors.toList());
-        if (!missingConsts.isEmpty()) {
-            throw new UndefinedConstantError(expr, missingConsts);
-        }
-    }
-
-    @Override
-    public List<AArithExpr> visit(Range range) {
-        assertRequiredConstsDefined(range);
-        Var lowerBoundFresh = new Var("lowerBound!fresh");
-        Var upperBoundFresh = new Var("upperBound!fresh");
-        Z3Result result = Z3.checkSAT(new And(
-                getInvariant(),
-                new Equals(lowerBoundFresh, range.getLowerBound()),
-                new Equals(upperBoundFresh, range.getUpperBound())
-        ));
-        Model model = result.getModel(Arrays.asList(lowerBoundFresh, upperBoundFresh));
-        return Maths.range(model.get(lowerBoundFresh).getValue(), model.get(upperBoundFresh).getValue()).stream().map(Int::new).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AArithExpr> visit(Set set) {
-        assertRequiredConstsDefined(set);
-        List<Var> elementsVars = Streams.mapWithIndex(set.getElements().stream(), (index, element) -> new Var("element!" + index + "!fresh")).collect(Collectors.toList());
-        Z3Result result = Z3.checkSAT(new And(
-                getInvariant(),
-                new And(Streams.mapWithIndex(elementsVars.stream(), (index, var) -> new Equals(var, set.getElements().get(index))).toArray(ABoolExpr[]::new))
-        ));
-        return result.getModel(elementsVars).values().stream().map(aValue -> new Int(aValue.getValue())).distinct().collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AArithExpr> visit(NamedSet namedSet) {
-        return getDefs().get(namedSet.getName()).getDomain().accept(this);
     }
 
 }

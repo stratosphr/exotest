@@ -3,7 +3,7 @@ package langs.bevent.exprs.sets;
 import langs.bevent.exprs.arith.AArithExpr;
 import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.bool.ABoolExpr;
-import visitors.computers.IElementsComputer;
+import visitors.computers.ISetElementsComputer;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.generators.sets.IDomainConstraintGenerator;
 
@@ -58,7 +58,7 @@ public final class Range extends AFiniteSetExpr {
     }
 
     @Override
-    public List<AArithExpr> accept(IElementsComputer computer) {
+    public List<AArithExpr> accept(ISetElementsComputer computer) {
         return computer.visit(this);
     }
 

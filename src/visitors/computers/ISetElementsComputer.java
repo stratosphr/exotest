@@ -11,7 +11,7 @@ import java.util.List;
  * Created by gvoiron on 08/06/18.
  * Time : 21:26
  */
-public interface IElementsComputer {
+public interface ISetElementsComputer {
 
     List<AArithExpr> visit(Range range);
 

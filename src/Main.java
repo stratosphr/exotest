@@ -1,6 +1,9 @@
 import langs.bevent.Event;
 import langs.bevent.Machine;
-import langs.bevent.exprs.arith.*;
+import langs.bevent.exprs.arith.Const;
+import langs.bevent.exprs.arith.Fun;
+import langs.bevent.exprs.arith.Int;
+import langs.bevent.exprs.arith.Var;
 import langs.bevent.exprs.bool.And;
 import langs.bevent.exprs.bool.Equals;
 import langs.bevent.exprs.bool.Invariant;
@@ -24,20 +27,17 @@ public class Main {
 
     public static void main(String[] args) {
         List<ConstDef> constsDefs = Arrays.asList(
-                new ConstDef(new Const("z"), new Plus(new Const("n"), new Int(3))),
                 new ConstDef(new Const("n"), new Int(10))
         );
         List<SetDef> setsDefs = Arrays.asList(
-                new SetDef("Bats", new Range(new Int(1), new Const("n"))),
-                new SetDef("Bats2", new Set(new Int(1), new Const("n"), new Const("z")))
+                new SetDef("Bats", new Range(new Int(0), new Const("n")))
         );
         List<VarDef> varsDefs = Arrays.asList(
                 new VarDef(new Var("h"), new Set(new Int(0), new Int(1))),
                 new VarDef(new Var("sw"), new NamedSet("Bats"))
         );
         List<FunDef> funsDefs = Arrays.asList(
-                new FunDef("bat", new NamedSet("Bats"), new Set(new Int(0), new Int(1))),
-                new FunDef("bat2", new NamedSet("Bats2"), new Set(new Int(0), new Int(1)))
+                new FunDef("bat", new NamedSet("Bats"), new Set(new Int(0), new Int(1)))
         );
         Invariant invariant = new Invariant(new And(
                 new Equals(new Fun("bat", new Var("sw")), new Int(1))
