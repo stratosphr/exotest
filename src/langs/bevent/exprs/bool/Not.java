@@ -1,11 +1,8 @@
 package langs.bevent.exprs.bool;
 
 import com.microsoft.z3.BoolExpr;
-import langs.bevent.exprs.arith.Const;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
-
-import java.util.List;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -25,11 +22,6 @@ public final class Not extends AUnaryBoolExpr<ABoolExpr> {
     @Override
     public BoolExpr accept(IZ3Encoder generator) {
         return generator.visit(this);
-    }
-
-    @Override
-    public List<Const> getRequiredConsts() {
-        return getOperand().getRequiredConsts();
     }
 
 }

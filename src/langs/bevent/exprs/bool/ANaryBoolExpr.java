@@ -2,8 +2,11 @@ package langs.bevent.exprs.bool;
 
 import errors.InvalidNumberOfArgumentsError;
 import langs.bevent.exprs.AExpr;
+import langs.bevent.exprs.arith.Const;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -22,6 +25,11 @@ public abstract class ANaryBoolExpr<Operand extends AExpr> extends ABoolExpr {
 
     public final List<Operand> getOperands() {
         return operands;
+    }
+
+    @Override
+    public final List<Const> getRequiredConsts() {
+        return getOperands().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).distinct().collect(Collectors.toList());
     }
 
 }

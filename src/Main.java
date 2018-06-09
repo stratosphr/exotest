@@ -1,11 +1,9 @@
 import langs.bevent.Event;
 import langs.bevent.Machine;
-import langs.bevent.exprs.arith.Const;
-import langs.bevent.exprs.arith.Int;
-import langs.bevent.exprs.arith.Plus;
-import langs.bevent.exprs.arith.Var;
+import langs.bevent.exprs.arith.*;
+import langs.bevent.exprs.bool.And;
+import langs.bevent.exprs.bool.Equals;
 import langs.bevent.exprs.bool.Invariant;
-import langs.bevent.exprs.bool.True;
 import langs.bevent.exprs.defs.ConstDef;
 import langs.bevent.exprs.defs.FunDef;
 import langs.bevent.exprs.defs.SetDef;
@@ -41,7 +39,9 @@ public class Main {
                 new FunDef("bat", new NamedSet("Bats"), new Set(new Int(0), new Int(1))),
                 new FunDef("bat2", new NamedSet("Bats2"), new Set(new Int(0), new Int(1)))
         );
-        Invariant invariant = new Invariant(new True());
+        Invariant invariant = new Invariant(new And(
+                new Equals(new Fun("bat", new Var("sw")), new Int(1))
+        ));
         ASubstitution initialisation = new Skip();
         List<Event> events = new ArrayList<>();
         Machine machine = Machine.build(

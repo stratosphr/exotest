@@ -7,6 +7,7 @@ import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 import langs.bevent.exprs.defs.*;
 import langs.bevent.exprs.sets.*;
+import langs.bevent.exprs.sets.Set;
 import langs.bevent.substitutions.ASubstitution;
 import utilities.Maths;
 import utilities.Streams;
@@ -16,10 +17,7 @@ import z3.Model;
 import z3.Z3;
 import z3.Z3Result;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -65,13 +63,13 @@ public final class Machine extends AObject implements IElementsComputer {
         ));
         this.initialisation = initialisation;
         this.events = events.stream().distinct().collect(Collectors.toList());
+        this.assignables = new ArrayList<>();
     }
 
     public static Machine build(String name, List<ConstDef> constsDefs, List<SetDef> setsDefs, List<VarDef> varsDefs, List<FunDef> funsDefs, Invariant invariant, ASubstitution initialisation, List<Event> events) {
         singleton = new Machine(name, constsDefs, setsDefs, varsDefs, funsDefs, invariant, initialisation, events);
-        System.out.println(singleton.getFunsDefs());
-        System.out.println(singleton.getFunsDefs().get(0).getDomain().accept(singleton));
-        System.out.println(singleton.getFunsDefs().get(1).getDomain().accept(singleton));
+        singleton.getVarsDefs().forEach(varDef -> singleton.assignables.add(varDef.getVar()));
+        singleton.getFunsDefs().forEach(funDef -> funDef.getDomain().accept(singleton).forEach(expr -> singleton.assignables.add(new Fun(funDef.getName(), expr))));
         return singleton;
     }
 
@@ -142,7 +140,6 @@ public final class Machine extends AObject implements IElementsComputer {
         Var upperBoundFresh = new Var("upperBound!fresh");
         Z3Result result = Z3.checkSAT(new And(
                 getInvariant(),
-                //new And(range.getRequiredConsts().stream().map(aConst -> getDefs().get(aConst.getName()).getDomain().accept(new DomainConstraintGenerator(aConst))).toArray(ABoolExpr[]::new)),
                 new Equals(lowerBoundFresh, range.getLowerBound()),
                 new Equals(upperBoundFresh, range.getUpperBound())
         ));

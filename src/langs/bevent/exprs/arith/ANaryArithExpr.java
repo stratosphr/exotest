@@ -28,7 +28,7 @@ public abstract class ANaryArithExpr<Operand extends AExpr> extends AArithExpr {
 
     @Override
     public final List<Const> getRequiredConsts() {
-        return getOperands().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).collect(Collectors.toList());
+        return getOperands().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).distinct().collect(Collectors.toList());
     }
 
 }
