@@ -32,7 +32,7 @@ public final class Machine extends AObject {
     private final Invariant invariant;
     private final ASubstitution initialisation;
     private final List<Event> events;
-    private List<AAssignable> assignables;
+    private final List<AAssignable> assignables;
 
     private Machine(String name, List<ConstDef> constsDefs, List<SetDef> setsDefs, List<VarDef> varsDefs, List<FunDef> funsDefs, Invariant invariant, ASubstitution initialisation, List<Event> events) {
         this.name = name;

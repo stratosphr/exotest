@@ -250,7 +250,7 @@ public final class ObjectFormatter implements IObjectFormatter {
 
     @Override
     public String visit(Event event) {
-        return null;
+        return event.getName() + " " + EQDEF + " " + event.getSubstitution().accept(this);
     }
 
 }

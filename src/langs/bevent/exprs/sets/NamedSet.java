@@ -16,7 +16,7 @@ import java.util.List;
  */
 public final class NamedSet extends AFiniteSetExpr {
 
-    private String name;
+    private final String name;
 
     public NamedSet(String name) {
         this.name = name;

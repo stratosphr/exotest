@@ -6,7 +6,7 @@ package langs.bevent.exprs.arith;
  */
 public abstract class AValue extends AArithExpr {
 
-    private Integer value;
+    private final Integer value;
 
     public AValue(Integer value) {
         this.value = value;
