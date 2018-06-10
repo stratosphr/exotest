@@ -4,6 +4,7 @@ import com.microsoft.z3.BoolExpr;
 import langs.bevent.exprs.arith.Const;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
+import visitors.primer.IPrimer;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by gvoiron on 08/06/18.
  * Time : 09:51
  */
-public final class Invariant extends ABoolExpr {
+public final class Invariant extends ABoolExpr<Invariant> {
 
     private final ABoolExpr expr;
 
@@ -36,6 +37,11 @@ public final class Invariant extends ABoolExpr {
     @Override
     public List<Const> getRequiredConsts() {
         return expr.getRequiredConsts();
+    }
+
+    @Override
+    public Invariant accept(IPrimer primer) {
+        return primer.visit(this);
     }
 
 }

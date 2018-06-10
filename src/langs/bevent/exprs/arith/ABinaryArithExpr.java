@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Created by gvoiron on 25/05/18.
  * Time : 18:19
  */
-public abstract class ABinaryArithExpr<Operand extends AExpr> extends ANaryArithExpr<Operand> {
+public abstract class ABinaryArithExpr<Operand extends AExpr, Primed extends ABinaryArithExpr<Operand, Primed>> extends ANaryArithExpr<Operand, Primed> {
 
     private final Operand left;
     private final Operand right;

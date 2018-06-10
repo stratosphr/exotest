@@ -7,7 +7,7 @@ import langs.bevent.exprs.sets.ASetExpr;
  * Created by gvoiron on 26/05/18.
  * Time : 11:35
  */
-public abstract class AIn<Expr extends AArithExpr> extends ABoolExpr {
+public abstract class AIn<Expr extends AArithExpr<Expr>, Primed extends AIn<Expr, Primed>> extends ABoolExpr<Primed> {
 
     private final Expr expr;
     private final ASetExpr domain;

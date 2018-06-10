@@ -54,7 +54,7 @@ public interface IObjectFormatter {
 
     String visit(Equiv equiv);
 
-    <Value extends AArithExpr> String visit(In<Value> in);
+    <Value extends AArithExpr<Value>> String visit(In<Value> in);
 
     String visit(VarIn varIn);
 

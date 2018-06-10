@@ -4,6 +4,7 @@ import com.microsoft.z3.ArithExpr;
 import visitors.decoders.IModelValueDecoder;
 import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
+import visitors.primer.IPrimer;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by gvoiron on 25/05/18.
  * Time : 17:51
  */
-public final class Fun extends AAssignable {
+public final class Fun extends AAssignable<Fun> {
 
     private final AArithExpr param;
 
@@ -42,6 +43,11 @@ public final class Fun extends AAssignable {
     @Override
     public List<Const> getRequiredConsts() {
         return getParam().getRequiredConsts();
+    }
+
+    @Override
+    public Fun accept(IPrimer primer) {
+        return primer.visit(this);
     }
 
 }

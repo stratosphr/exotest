@@ -103,7 +103,7 @@ public final class Z3Encoder implements IZ3Encoder {
     }
 
     @Override
-    public <Value extends AArithExpr> BoolExpr visit(In<Value> in) {
+    public <Value extends AArithExpr<Value>> BoolExpr visit(In<Value> in) {
         return in.getDomain().accept(new DomainConstraintGenerator(in.getExpr())).accept(this);
     }
 

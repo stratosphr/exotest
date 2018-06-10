@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * Created by gvoiron on 25/05/18.
  * Time : 17:55
  */
-public abstract class ANaryArithExpr<Operand extends AExpr> extends AArithExpr {
+public abstract class ANaryArithExpr<Operand extends AExpr, Primed extends ANaryArithExpr<Operand, Primed>> extends AArithExpr<Primed> {
 
     private final List<Operand> operands;
 

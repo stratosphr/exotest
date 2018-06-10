@@ -43,7 +43,7 @@ public interface IZ3Encoder {
 
     BoolExpr visit(Equiv equiv);
 
-    <Value extends AArithExpr> BoolExpr visit(In<Value> in);
+    <Value extends AArithExpr<Value>> BoolExpr visit(In<Value> in);
 
     BoolExpr visit(VarIn varIn);
 

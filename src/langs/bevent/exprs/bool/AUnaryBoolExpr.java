@@ -8,7 +8,7 @@ import java.util.Collections;
  * Created by gvoiron on 26/05/18.
  * Time : 00:11
  */
-public abstract class AUnaryBoolExpr<Operand extends AExpr> extends ANaryBoolExpr<Operand> {
+public abstract class AUnaryBoolExpr<Operand extends AExpr, Primed extends AUnaryBoolExpr<Operand, Primed>> extends ANaryBoolExpr<Operand, Primed> {
 
     private final Operand operand;
 

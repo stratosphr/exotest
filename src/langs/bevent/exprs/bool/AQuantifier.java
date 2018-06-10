@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by gvoiron on 03/06/18.
  * Time : 23:05
  */
-public abstract class AQuantifier extends ABoolExpr {
+public abstract class AQuantifier<Primed extends AQuantifier<Primed>> extends ABoolExpr<Primed> {
 
     private final ABoolExpr expr;
     private final List<VarIn> quantifiedVarsDefs;

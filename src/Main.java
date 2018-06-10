@@ -16,6 +16,7 @@ import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 import langs.bevent.substitutions.ASubstitution;
 import langs.bevent.substitutions.Skip;
+import visitors.primer.Primer;
 import z3.Z3;
 import z3.Z3Result;
 
@@ -56,6 +57,8 @@ public class Main {
         );
         Z3Result z3Result = Z3.checkSAT(machine.getInvariant());
         System.out.println(z3Result.getModel(machine.getAssignables()));
+        System.out.println(machine.getInvariant().accept(new Primer(machine.getAssignables())));
+        System.out.println(machine.getInvariant().accept(new Primer("bat")));
     }
 
 }

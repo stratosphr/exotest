@@ -105,7 +105,7 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
-    public <Value extends AArithExpr> String visit(In<Value> in) {
+    public <Value extends AArithExpr<Value>> String visit(In<Value> in) {
         return in.getExpr().accept(this) + " " + IN + " " + in.getDomain().accept(this);
     }
 

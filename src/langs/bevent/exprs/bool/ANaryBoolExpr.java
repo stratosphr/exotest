@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Created by gvoiron on 26/05/18.
  * Time : 00:02
  */
-public abstract class ANaryBoolExpr<Operand extends AExpr> extends ABoolExpr {
+public abstract class ANaryBoolExpr<Operand extends AExpr, Primed extends ANaryBoolExpr<Operand, Primed>> extends ABoolExpr<Primed> {
 
     private final List<Operand> operands;
 
