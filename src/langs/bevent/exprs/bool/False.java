@@ -6,8 +6,7 @@ import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.primer.IPrimer;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -26,8 +25,8 @@ public final class False extends ABoolExpr<False> {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return new LinkedHashSet<>();
     }
 
     @Override

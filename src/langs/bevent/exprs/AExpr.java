@@ -3,7 +3,7 @@ package langs.bevent.exprs;
 import langs.AObject;
 import langs.bevent.exprs.arith.Const;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -11,6 +11,6 @@ import java.util.List;
  */
 public abstract class AExpr extends AObject {
 
-    public abstract List<Const> getRequiredConsts();
+    public abstract LinkedHashSet<Const> getRequiredConsts();
 
 }

@@ -4,7 +4,7 @@ import langs.bevent.exprs.arith.*;
 import langs.bevent.exprs.bool.*;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 09/06/18.
@@ -12,20 +12,20 @@ import java.util.List;
  */
 public final class Primer implements IPrimer {
 
-    private final List<String> assignablesNames;
+    private final LinkedHashSet<String> assignablesNames;
     private final String primeSuffix;
 
     public Primer(String... assignables) {
-        this.assignablesNames = Arrays.asList(assignables);
+        this.assignablesNames = new LinkedHashSet<>(Arrays.asList(assignables));
         this.primeSuffix = "_";
     }
 
-    public Primer(List<AAssignable> assignables) {
+    public Primer(LinkedHashSet<AAssignable> assignables) {
         this(assignables.stream().map(AAssignable::getName).toArray(String[]::new));
     }
 
     public Primer(AAssignable... assignables) {
-        this(Arrays.asList(assignables));
+        this(new LinkedHashSet<>(Arrays.asList(assignables)));
     }
 
     @Override

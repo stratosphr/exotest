@@ -4,6 +4,7 @@ import errors.InvalidNumberOfOperandsError;
 import langs.bevent.exprs.AExpr;
 
 import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,8 @@ public abstract class ANaryArithExpr<Operand extends AExpr, Primed extends ANary
     }
 
     @Override
-    public final List<Const> getRequiredConsts() {
-        return getOperands().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).distinct().collect(Collectors.toList());
+    public final LinkedHashSet<Const> getRequiredConsts() {
+        return getOperands().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

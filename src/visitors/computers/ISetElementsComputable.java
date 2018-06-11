@@ -2,7 +2,7 @@ package visitors.computers;
 
 import langs.bevent.exprs.arith.AArithExpr;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 09/06/18.
@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface ISetElementsComputable {
 
-    List<AArithExpr> accept(ISetElementsComputer computer);
+    LinkedHashSet<AArithExpr> accept(ISetElementsComputer computer);
 
 }

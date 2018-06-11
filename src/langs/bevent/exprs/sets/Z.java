@@ -5,8 +5,7 @@ import langs.bevent.exprs.bool.ABoolExpr;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.generators.sets.IDomainConstraintGenerator;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 04/06/18.
@@ -25,8 +24,8 @@ public final class Z extends ASetExpr {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return new LinkedHashSet<>();
     }
 
 }

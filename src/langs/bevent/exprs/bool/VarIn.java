@@ -9,7 +9,7 @@ import visitors.formatters.object.IObjectFormatter;
 import visitors.primer.IPrimer;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,8 +38,8 @@ public final class VarIn extends AIn<Var, VarIn> {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Stream.of(getExpr().getRequiredConsts(), getDomain().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toList());
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return Stream.of(getExpr().getRequiredConsts(), getDomain().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     @Override

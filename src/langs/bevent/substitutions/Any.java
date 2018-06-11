@@ -8,7 +8,7 @@ import langs.bevent.exprs.bool.VarIn;
 import visitors.formatters.object.IObjectFormatter;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,21 +19,21 @@ import java.util.stream.Collectors;
 public final class Any extends ASubstitution {
 
     private final ABoolExpr condition;
-    private final List<VarIn> quantifiedVars;
+    private final LinkedHashSet<VarIn> quantifiedVarsDefs;
     private final ASubstitution substitution;
 
-    public Any(ABoolExpr condition, ASubstitution substitution, VarIn... quantifiedVars) {
-        if (quantifiedVars.length == 0) {
+    public Any(ABoolExpr condition, ASubstitution substitution, VarIn... quantifiedVarsDefs) {
+        if (quantifiedVarsDefs.length == 0) {
             throw new InvalidNumberOfQuantifiedVarsError(this);
         }
         this.condition = condition;
         this.substitution = substitution;
-        this.quantifiedVars = Arrays.stream(quantifiedVars).distinct().collect(Collectors.toList());
+        this.quantifiedVarsDefs = Arrays.stream(quantifiedVarsDefs).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     @Override
     public ABoolExpr getPrd(Set<AAssignable> assignables) {
-        return new Exists(new Select(condition, substitution).getPrd(assignables), quantifiedVars.toArray(new VarIn[0]));
+        return new Exists(new Select(condition, substitution).getPrd(assignables), quantifiedVarsDefs.toArray(new VarIn[0]));
     }
 
     @Override
@@ -49,8 +49,8 @@ public final class Any extends ASubstitution {
         return substitution;
     }
 
-    public List<VarIn> getQuantifiedVarsDefs() {
-        return quantifiedVars;
+    public LinkedHashSet<VarIn> getQuantifiedVarsDefs() {
+        return quantifiedVarsDefs;
     }
 
 }

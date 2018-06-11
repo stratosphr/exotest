@@ -8,7 +8,7 @@ import visitors.formatters.object.IObjectFormatter;
 import visitors.generators.sets.IDomainConstraintGenerator;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,13 +58,13 @@ public final class Range extends AFiniteSetExpr {
     }
 
     @Override
-    public List<AArithExpr> accept(ISetElementsComputer computer) {
+    public LinkedHashSet<AArithExpr> accept(ISetElementsComputer computer) {
         return computer.visit(this);
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Stream.of(getLowerBound().getRequiredConsts(), getUpperBound().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toList());
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return Stream.of(getLowerBound().getRequiredConsts(), getUpperBound().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

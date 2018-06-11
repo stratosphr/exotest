@@ -5,7 +5,7 @@ import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.sets.Set;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -36,7 +36,7 @@ public final class ConstDef extends ADef {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
+    public LinkedHashSet<Const> getRequiredConsts() {
         return getValue().getRequiredConsts();
     }
 

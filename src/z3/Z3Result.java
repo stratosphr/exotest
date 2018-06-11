@@ -7,7 +7,7 @@ import errors.ModelUnavailableError;
 import langs.bevent.exprs.arith.AAssignable;
 import langs.bevent.exprs.bool.ABoolExpr;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import static com.microsoft.z3.Status.*;
 
@@ -45,7 +45,7 @@ public final class Z3Result {
         return status == UNSATISFIABLE;
     }
 
-    public Model getModel(List<? extends AAssignable> assignables) {
+    public Model getModel(LinkedHashSet<? extends AAssignable> assignables) {
         if (status == SATISFIABLE) {
             return new Model(solver.getModel(), context, assignables);
         } else {

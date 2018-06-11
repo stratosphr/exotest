@@ -7,7 +7,7 @@ import langs.bevent.exprs.bool.Or;
 import visitors.formatters.object.IObjectFormatter;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,16 +17,16 @@ import java.util.stream.Collectors;
  */
 public final class Choice extends ASubstitution {
 
-    private List<ASubstitution> choices;
+    private LinkedHashSet<ASubstitution> choices;
 
     public Choice(ASubstitution... choices) {
         if (choices.length == 0) {
             throw new InvalidNumberOfChoicesError();
         }
-        this.choices = Arrays.stream(choices).distinct().collect(Collectors.toList());
+        this.choices = Arrays.stream(choices).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public List<ASubstitution> getChoices() {
+    public LinkedHashSet<ASubstitution> getChoices() {
         return choices;
     }
 

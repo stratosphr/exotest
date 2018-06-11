@@ -6,7 +6,7 @@ import visitors.formatters.object.IObjectFormatter;
 import visitors.primer.IPrimer;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 25/05/18.
@@ -35,8 +35,8 @@ public final class Const extends AArithExpr<Const> {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Collections.singletonList(this);
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return new LinkedHashSet<>(Collections.singletonList(this));
     }
 
     @Override

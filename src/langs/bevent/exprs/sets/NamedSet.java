@@ -7,8 +7,7 @@ import visitors.computers.ISetElementsComputer;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.generators.sets.IDomainConstraintGenerator;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 08/06/18.
@@ -37,13 +36,13 @@ public final class NamedSet extends AFiniteSetExpr {
     }
 
     @Override
-    public List<AArithExpr> accept(ISetElementsComputer computer) {
+    public LinkedHashSet<AArithExpr> accept(ISetElementsComputer computer) {
         return computer.visit(this);
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return new LinkedHashSet<>();
     }
 
 }

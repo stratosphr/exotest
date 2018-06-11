@@ -6,7 +6,7 @@ import visitors.encoders.z3.IZ3Encoder;
 import visitors.formatters.object.IObjectFormatter;
 import visitors.primer.IPrimer;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 08/06/18.
@@ -35,7 +35,7 @@ public final class Invariant extends ABoolExpr<Invariant> {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
+    public LinkedHashSet<Const> getRequiredConsts() {
         return expr.getRequiredConsts();
     }
 

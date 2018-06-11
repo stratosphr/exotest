@@ -4,7 +4,7 @@ import langs.AObject;
 import langs.bevent.exprs.arith.Const;
 import langs.bevent.exprs.sets.AFiniteSetExpr;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 /**
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  */
 public class UndefinedConstantError extends Error {
 
-    public UndefinedConstantError(AFiniteSetExpr set, List<Const> consts) {
+    public UndefinedConstantError(AFiniteSetExpr set, LinkedHashSet<Const> consts) {
         super("Unable to compute elements in set \"" + set + "\" because the following constants where not defined : " + consts.stream().map(AObject::toString).collect(Collectors.joining(", ")) + ".");
     }
 

@@ -6,7 +6,7 @@ import langs.bevent.exprs.sets.ASetExpr;
 import visitors.formatters.object.IObjectFormatter;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,8 +33,8 @@ public final class FunDef extends ADef {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Stream.of(getDomain().getRequiredConsts(), getCodomain().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toList());
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return Stream.of(getDomain().getRequiredConsts(), getCodomain().getRequiredConsts()).flatMap(Collection::stream).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

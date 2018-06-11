@@ -10,7 +10,7 @@ import visitors.generators.sets.IDomainConstraintGenerator;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
 /**
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
  */
 public final class Set extends AFiniteSetExpr {
 
-    private final List<AArithExpr> elements;
+    private final LinkedHashSet<AArithExpr> elements;
 
     public Set(AArithExpr... elements) {
-        this.elements = Arrays.stream(elements).distinct().collect(Collectors.toList());
+        this.elements = Arrays.stream(elements).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    public List<AArithExpr> getElements() {
+    public LinkedHashSet<AArithExpr> getElements() {
         return elements;
     }
 
@@ -41,13 +41,13 @@ public final class Set extends AFiniteSetExpr {
     }
 
     @Override
-    public List<AArithExpr> accept(ISetElementsComputer computer) {
+    public LinkedHashSet<AArithExpr> accept(ISetElementsComputer computer) {
         return computer.visit(this);
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return getElements().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).collect(Collectors.toList());
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return getElements().stream().map(AExpr::getRequiredConsts).flatMap(Collection::stream).collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
 }

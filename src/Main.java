@@ -63,7 +63,7 @@ public class Main {
         System.out.println(prd);
         Z3Result z3Result = Z3.checkSAT(new And(invariant, invariant_, prd));
         System.out.println(z3Result.getModel(machine.getAssignables()));
-        System.out.println(z3Result.getModel(machine.getAssignables().stream().map(assignable -> assignable.accept(new Primer(assignable))).collect(Collectors.toList())));
+        System.out.println(z3Result.getModel(new LinkedHashSet<>(machine.getAssignables().stream().map(assignable -> assignable.accept(new Primer(assignable))).collect(Collectors.toList()))));
         System.out.println(new Any(
                 new True(),
                 new Skip(),

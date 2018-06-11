@@ -5,8 +5,7 @@ import langs.bevent.exprs.arith.Var;
 import langs.bevent.exprs.sets.AFiniteSetExpr;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 26/05/18.
@@ -31,8 +30,8 @@ public final class VarDef extends ADef {
     }
 
     @Override
-    public List<Const> getRequiredConsts() {
-        return Collections.emptyList();
+    public LinkedHashSet<Const> getRequiredConsts() {
+        return new LinkedHashSet<>();
     }
 
 }

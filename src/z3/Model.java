@@ -5,7 +5,7 @@ import langs.bevent.exprs.arith.*;
 import visitors.decoders.IModelValueDecoder;
 import visitors.encoders.z3.Z3Encoder;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.TreeMap;
 
 /**
@@ -17,7 +17,7 @@ public final class Model extends TreeMap<AAssignable, AValue> implements IModelV
     private final com.microsoft.z3.Model model;
     private final Context context;
 
-    public Model(com.microsoft.z3.Model model, Context context, List<? extends AAssignable> assignables) {
+    public Model(com.microsoft.z3.Model model, Context context, LinkedHashSet<? extends AAssignable> assignables) {
         this.model = model;
         this.context = context;
         assignables.forEach(var -> put(var, var.accept(this)));

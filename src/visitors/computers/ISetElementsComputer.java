@@ -5,7 +5,7 @@ import langs.bevent.exprs.sets.NamedSet;
 import langs.bevent.exprs.sets.Range;
 import langs.bevent.exprs.sets.Set;
 
-import java.util.List;
+import java.util.LinkedHashSet;
 
 /**
  * Created by gvoiron on 08/06/18.
@@ -13,10 +13,10 @@ import java.util.List;
  */
 public interface ISetElementsComputer {
 
-    List<AArithExpr> visit(Range range);
+    LinkedHashSet<AArithExpr> visit(Range range);
 
-    List<AArithExpr> visit(Set set);
+    LinkedHashSet<AArithExpr> visit(Set set);
 
-    List<AArithExpr> visit(NamedSet namedSet);
+    LinkedHashSet<AArithExpr> visit(NamedSet namedSet);
 
 }

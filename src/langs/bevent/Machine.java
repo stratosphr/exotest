@@ -12,8 +12,10 @@ import langs.bevent.substitutions.ASubstitution;
 import visitors.computers.SetElementsComputer;
 import visitors.formatters.object.IObjectFormatter;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -24,22 +26,22 @@ public final class Machine extends AObject {
 
     private static Machine singleton;
     private final String name;
-    private final List<ConstDef> constsDefs;
-    private final List<SetDef> setsDefs;
-    private final List<VarDef> varsDefs;
-    private final List<FunDef> funsDefs;
-    private final Map<String, ADef> defs;
+    private final LinkedHashSet<ConstDef> constsDefs;
+    private final LinkedHashSet<SetDef> setsDefs;
+    private final LinkedHashSet<VarDef> varsDefs;
+    private final LinkedHashSet<FunDef> funsDefs;
+    private final LinkedHashMap<String, ADef> defs;
     private final Invariant invariant;
     private final ASubstitution initialisation;
-    private final List<Event> events;
-    private final List<AAssignable> assignables;
+    private final LinkedHashSet<Event> events;
+    private final LinkedHashSet<AAssignable> assignables;
 
     private Machine(String name, List<ConstDef> constsDefs, List<SetDef> setsDefs, List<VarDef> varsDefs, List<FunDef> funsDefs, Invariant invariant, ASubstitution initialisation, List<Event> events) {
         this.name = name;
-        this.constsDefs = constsDefs.stream().distinct().collect(Collectors.toList());
-        this.setsDefs = setsDefs.stream().distinct().collect(Collectors.toList());
-        this.varsDefs = varsDefs.stream().distinct().collect(Collectors.toList());
-        this.funsDefs = funsDefs.stream().distinct().collect(Collectors.toList());
+        this.constsDefs = new LinkedHashSet<>(constsDefs);
+        this.setsDefs = new LinkedHashSet<>(setsDefs);
+        this.varsDefs = new LinkedHashSet<>(varsDefs);
+        this.funsDefs = new LinkedHashSet<>(funsDefs);
         this.defs = new LinkedHashMap<>();
         Stream.of(getConstsDefs(), getSetsDefs(), getVarsDefs(), getFunsDefs()).flatMap(Collection::stream).forEach(def -> {
             if (defs.containsKey(def.getName())) {
@@ -61,8 +63,8 @@ public final class Machine extends AObject {
                 invariant
         ));
         this.initialisation = initialisation;
-        this.events = events.stream().distinct().collect(Collectors.toList());
-        this.assignables = new ArrayList<>();
+        this.events = new LinkedHashSet<>(events);
+        this.assignables = new LinkedHashSet<>();
     }
 
     public static Machine build(String name, List<ConstDef> constsDefs, List<SetDef> setsDefs, List<VarDef> varsDefs, List<FunDef> funsDefs, Invariant invariant, ASubstitution initialisation, List<Event> events) {
@@ -83,19 +85,19 @@ public final class Machine extends AObject {
         return name;
     }
 
-    public List<ConstDef> getConstsDefs() {
+    public LinkedHashSet<ConstDef> getConstsDefs() {
         return constsDefs;
     }
 
-    public List<SetDef> getSetsDefs() {
+    public LinkedHashSet<SetDef> getSetsDefs() {
         return setsDefs;
     }
 
-    public List<VarDef> getVarsDefs() {
+    public LinkedHashSet<VarDef> getVarsDefs() {
         return varsDefs;
     }
 
-    public List<FunDef> getFunsDefs() {
+    public LinkedHashSet<FunDef> getFunsDefs() {
         return funsDefs;
     }
 
@@ -107,15 +109,15 @@ public final class Machine extends AObject {
         return initialisation;
     }
 
-    public List<Event> getEvents() {
+    public LinkedHashSet<Event> getEvents() {
         return events;
     }
 
-    public List<AAssignable> getAssignables() {
+    public LinkedHashSet<AAssignable> getAssignables() {
         return assignables;
     }
 
-    public Map<String, ADef> getDefs() {
+    public LinkedHashMap<String, ADef> getDefs() {
         return defs;
     }
 
