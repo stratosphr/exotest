@@ -1,6 +1,6 @@
 package langs.bevent.exprs.arith;
 
-import errors.InvalidNumberOfArgumentsError;
+import errors.InvalidNumberOfOperandsError;
 import langs.bevent.exprs.AExpr;
 
 import java.util.Collection;
@@ -18,7 +18,7 @@ public abstract class ANaryArithExpr<Operand extends AExpr, Primed extends ANary
     public ANaryArithExpr(List<Operand> operands, int minOperands) {
         this.operands = operands;
         if (operands.size() < minOperands) {
-            throw new InvalidNumberOfArgumentsError(this, minOperands);
+            throw new InvalidNumberOfOperandsError(this, minOperands);
         }
     }
 

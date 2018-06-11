@@ -230,6 +230,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
+    public String visit(Choice choice) {
+        return "CHOICE " + choice.getChoices().stream().map(substitution -> substitution.accept(this)).collect(Collectors.joining(" OR ")) + " END";
+    }
+
+    @Override
     public String visit(Parallel parallel) {
         return parallel.getSubstitutions().stream().map(substitution -> substitution.accept(this)).collect(Collectors.joining(" || "));
     }

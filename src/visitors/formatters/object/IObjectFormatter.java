@@ -105,6 +105,8 @@ public interface IObjectFormatter {
 
     String visit(Any any);
 
+    String visit(Choice choice);
+
     String visit(Parallel parallel);
 
     String visit(Machine machine);

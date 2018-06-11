@@ -1,18 +1,18 @@
 package errors;
 
-import langs.AObject;
+import langs.bevent.exprs.AExpr;
 
 /**
  * Created by gvoiron on 25/05/18.
  * Time : 17:57
  */
-public final class InvalidNumberOfArgumentsError extends Error {
+public final class InvalidNumberOfOperandsError extends Error {
 
-    public InvalidNumberOfArgumentsError(AObject object, int minOperands) {
+    public InvalidNumberOfOperandsError(AExpr object, int minOperands) {
         super("The \"" + object.getClass().getSimpleName() + "\" operator expects at least " + minOperands + " operands.");
     }
 
-    public InvalidNumberOfArgumentsError(AObject object, int minOperands, int maxOperands) {
+    public InvalidNumberOfOperandsError(AExpr object, int minOperands, int maxOperands) {
         super("The \"" + object.getClass().getSimpleName() + "\" operator expects at least " + minOperands + " operands and at most " + maxOperands + " operands.");
     }
 

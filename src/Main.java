@@ -70,6 +70,8 @@ public class Main {
                 new VarIn(new Var("i1!"), new Set(new Int(0))),
                 new VarIn(new Var("i2!"), new Range(new Int(0), new Int(1)))
         ));
+        System.out.println(new Choice(new Skip(), new Select(new True(), new Skip()), new Select(new True(), multipleAssignment)).getPrd(new LinkedHashSet<>(machine.getAssignables())));
+        System.out.println(new Choice(new Skip(), new Select(new True(), new Skip())));
     }
 
 }

@@ -1,6 +1,6 @@
 package langs.bevent.exprs.bool;
 
-import errors.InvalidNumberOfArgumentsError;
+import errors.InvalidNumberOfOperandsError;
 import langs.bevent.exprs.AExpr;
 import langs.bevent.exprs.arith.Const;
 
@@ -19,7 +19,7 @@ public abstract class ANaryBoolExpr<Operand extends AExpr, Primed extends ANaryB
     public ANaryBoolExpr(List<Operand> operands, int minOperands) {
         this.operands = operands;
         if (operands.size() < minOperands) {
-            throw new InvalidNumberOfArgumentsError(this, minOperands);
+            throw new InvalidNumberOfOperandsError(this, minOperands);
         }
     }
 
