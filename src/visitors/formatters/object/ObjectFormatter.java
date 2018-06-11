@@ -225,6 +225,11 @@ public final class ObjectFormatter implements IObjectFormatter {
     }
 
     @Override
+    public String visit(Any any) {
+        return "ANY " + any.getQuantifiedVarsDefs().stream().map(varIn -> varIn.accept(this)).collect(Collectors.joining(", ")) + " WHERE " + any.getCondition().accept(this) + " THEN " + any.getSubstitution().accept(this) + " END";
+    }
+
+    @Override
     public String visit(Parallel parallel) {
         return parallel.getSubstitutions().stream().map(substitution -> substitution.accept(this)).collect(Collectors.joining(" || "));
     }

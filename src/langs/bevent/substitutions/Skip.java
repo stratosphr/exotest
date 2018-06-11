@@ -2,8 +2,10 @@ package langs.bevent.substitutions;
 
 import langs.bevent.exprs.arith.AAssignable;
 import langs.bevent.exprs.bool.ABoolExpr;
-import langs.bevent.exprs.bool.True;
+import langs.bevent.exprs.bool.And;
+import langs.bevent.exprs.bool.Equals;
 import visitors.formatters.object.IObjectFormatter;
+import visitors.primer.Primer;
 
 import java.util.Set;
 
@@ -20,7 +22,7 @@ public final class Skip extends ASubstitution {
 
     @Override
     public ABoolExpr getPrd(Set<AAssignable> assignables) {
-        return new True();
+        return new And(assignables.stream().map(assignable -> new Equals(assignable, assignable.accept(new Primer(assignable)))).toArray(ABoolExpr[]::new));
     }
 
 }

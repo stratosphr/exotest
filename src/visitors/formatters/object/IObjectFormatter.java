@@ -103,6 +103,8 @@ public interface IObjectFormatter {
 
     String visit(Select select);
 
+    String visit(Any any);
+
     String visit(Parallel parallel);
 
     String visit(Machine machine);
